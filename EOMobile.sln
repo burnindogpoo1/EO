@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOMobile.Android", "EOMobil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOMobile.iOS", "EOMobile\EOMobile.iOS\EOMobile.iOS.csproj", "{D7384AE8-DE2E-484B-AAA1-B74AFA1C34CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOMobile", "EOMobile\EOMobile\EOMobile.csproj", "{60AB0B3C-1A4A-4670-A9A2-EF03A7ABF6D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EOMobile", "EOMobile\EOMobile\EOMobile.csproj", "{60AB0B3C-1A4A-4670-A9A2-EF03A7ABF6D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{835326F6-E857-43DD-89F2-9E5BC23C64D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,14 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:EOMobile"
              x:Class="EOMobile.MainPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-
+            <Label Text="Elegant Orchids Administration"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Button Text="Inventory"  Clicked="OnInventoryClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="0"/>
+            <Button Text="Arrangements" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="0"/>
+            <Button Text="Work Orders" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="1"/>
+            <Button Text="Customers" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="1"/>
+            <Button Text="Vendors" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="2"/>
+            <Button Text="Shipments" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="2"/>
+            <Button Text="Reports" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="3"/>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

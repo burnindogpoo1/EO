@@ -10,16 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace EOMobile
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MainPage : ContentPage
+	public partial class InventoryPage : ContentPage
 	{
-		public MainPage ()
+		public InventoryPage ()
 		{
 			InitializeComponent ();
 		}
-
-        public void OnInventoryClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new NavigationPage(new InventoryPage()));
-        }
 	}
 }
