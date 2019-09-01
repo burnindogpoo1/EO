@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EOMobile.CustomerPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Elegant Orchids Customers"
+                   FontSize="Medium"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+   
+                <Button x:Name="Search" Clicked="OnCustomerSearchClicked" Text="Search" Grid.Column="0" Grid.Row="0"  HeightRequest="50" WidthRequest="200"/>
+
+                <Button x:Name="ShowAll" Clicked="OnShowAllCustomersClicked" Text="Show All" Grid.Column="2" Grid.Row="0"  HeightRequest="50" WidthRequest="200"/>
+                
+                <Label Text="First Name"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="FirstName"  Text="" Grid.Column="0" Grid.Row="2"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Last Name"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="LastName"  Text="" Grid.Column="1" Grid.Row="2"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Phone"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Phone"  Text="" Grid.Column="2" Grid.Row="2"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Email"
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Email"  Text="" Grid.Column="0" Grid.Row="4"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Address"
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Address"  Text="" Grid.Column="1" Grid.Row="4"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Unit/Apt/Suite"
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Address2"  Text="" Grid.Column="2" Grid.Row="4"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="City"
+                        Grid.Column="0"
+                        Grid.Row="5"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="City"  Text="" Grid.Column="0" Grid.Row="6"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="State"
+                        Grid.Column="1"
+                        Grid.Row="5"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="State"  Text="" Grid.Column="1" Grid.Row="6"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Zip Code"
+                        Grid.Column="2"
+                        Grid.Row="5"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Zip"  Text="" Grid.Column="2" Grid.Row="6"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Community"
+                        Grid.Column="0"
+                        Grid.Row="7"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="Start" />
+                <Picker x:Name="Community"   Grid.Column="0" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
+
+                <Button x:Name="Save"  Text="Save" Clicked="OnSaveCustomerClicked" Grid.Column="2" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
+
+            </Grid>
+
+            <Frame Padding="10,10,10,10">
+                <ListView  x:Name="CustomerListView" ItemsSource="{Binding Orders}" HorizontalOptions="Start" >
+
+                    <ListView.Header>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Phone"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Email"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Delete"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
+                        </Grid>
+                    </ListView.Header>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid  HorizontalOptions="Center" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Person.CustomerName}" HorizontalOptions="Start" />
+                                    <Label Text="{Binding Person.phone_primary}" Grid.Column="1"  HorizontalOptions="Start" />
+                                    <Label Text="{Binding Person.email}" Grid.Column="2" HorizontalOptions="Start" />
+                                    <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteCustomerClicked" CommandParameter="{Binding Person.person_id}" HorizontalOptions="Start" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

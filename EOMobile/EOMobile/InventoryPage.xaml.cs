@@ -15,6 +15,36 @@ namespace EOMobile
 		public InventoryPage ()
 		{
 			InitializeComponent ();
-		}
-	}
+        }
+
+        public void OnPlantsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new PlantPage());
+        }
+
+        public void OnFoliageClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new FoliagePage());
+        }
+
+        public void OnMaterialsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new MaterialsPage());
+        }
+
+        public void OnContainersClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ContainersPage());
+        }
+
+        public void OnArrangementsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ArrangementPage());
+        }
+
+        //public void OnImportClicked(object sender, EventArgs e)
+        //{
+        //    //Navigation.PushAsync(new PlantPage());
+        //}
+    }
 }

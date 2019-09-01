@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EOMobile.PersonFilterPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Person Filter"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    FontSize="Medium"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+
+                <Label Text="Name"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="Name" Text="" Grid.Column="0" Grid.Row="2"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="City"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="City" Text="" Grid.Column="1" Grid.Row="2" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Community"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="Community" Text="" Grid.Column="2" Grid.Row="2"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Phone"
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="Phone" Text="" Grid.Column="0" Grid.Row="4"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Email"
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="Email" Text="" Grid.Column="1" Grid.Row="4" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Address"
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="Address" Text="" Grid.Column="2" Grid.Row="4"  HeightRequest="50" WidthRequest="200"/>
+
+                <Button Text="Search" Grid.Column="1" Grid.Row="5" Clicked="OnSearchPersonClicked" HeightRequest="100" WidthRequest="300"/>
+            </Grid>
+
+            <Frame Padding="10,10,10,10">
+                <ListView ItemsSource="{Binding Orders}" HorizontalOptions="Start">
+                    <ListView.Header>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start"/>
+                            <Label Text="Address"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Phone"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Email"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
+                        </Grid>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Style="{StaticResource GridInListViewStyle}" HorizontalOptions="Start" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25*" />
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <!--<StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Padding="10, 0, 0, 0">
+                                        <Label Text="{Binding ProductName}" VerticalOptions="Center" />
+                                        <StackLayout>
+                                            <Entry Keyboard="Numeric" Grid.Column="1" Grid.Row="0" VerticalOptions="Center"/>
+                                         </StackLayout>
+                                    </StackLayout>-->
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>        
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

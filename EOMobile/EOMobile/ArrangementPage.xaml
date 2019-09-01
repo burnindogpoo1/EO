@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EOMobile.ArrangementPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Elegant Orchids Arrangements"
+                   FontSize="Medium"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Arrangement Name"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    XAlign="Start" />
+                <Editor x:Name="Name" Text="" Grid.Column="0" Grid.Row="1" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Inventory Search"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    XAlign="Start" />
+                <Button x:Name="Inventory" Clicked="OnInventorySearchClicked" Text="Search" Grid.Column="2" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+
+
+                <Label Text="Add Image"
+                    Grid.Column="3"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Button x:Name="AddImage" Clicked="OnAddImageClicked" Text="Add Image" Grid.Column="3" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+            </Grid>
+
+            <Label Text="Arrangement Items" HorizontalOptions="Start"></Label>
+            <Frame Padding="10,10,10,10">
+                <ListView  x:Name="ArrangementItemsListView" ItemsSource="{Binding arrangementInventoryList}" HorizontalOptions="Start" >
+                    <ListView.Header>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="Inventory Name"  Grid.Column="0" Grid.Row="0" />
+                            <Label Text="Quantity"  Grid.Column="1" Grid.Row="0"/>
+                            <Label Text="Image"  Grid.Column="2" Grid.Row="0"/>
+                            <Label Text="Delete"  Grid.Column="3" Grid.Row="0" />
+                        </Grid>
+                    </ListView.Header>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid HorizontalOptions="Start" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25*" />
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding InventoryName}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Editor x:Name="Quantity" Text="{Binding Quantity, Mode=TwoWay}" Grid.Column="1" PropertyChanged="Quantity_PropertyChanged" />
+                                    <Button Text="Image" Grid.Column="2"  />
+                                    <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteArrangementItem" CommandParameter="{Binding Key}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+
+            <Label Text="Saved Arrangements" HorizontalOptions="Start"></Label>
+            <Frame Padding="10,10,10,10">
+                <ListView  x:Name="ArrangementListView" ItemsSource="{Binding arrangementInventoryList}" HorizontalOptions="Start" >
+                    <ListView.Header>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="Arrangement Name"  Grid.Column="0" Grid.Row="0" />
+                            <Label Text="Items"  Grid.Column="1" Grid.Row="0"/>
+                            <Label Text="Image"  Grid.Column="2" Grid.Row="0"/>
+                            <Label Text="Delete"  Grid.Column="3" Grid.Row="0" />
+                        </Grid>
+                    </ListView.Header>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid HorizontalOptions="Start" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25*" />
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Arrangement.ArrangementName}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Picker x:Name="Quantity" ItemsSource = "{Binding InventoryList, Mode=TwoWay}" Grid.Column="1"  ItemDisplayBinding= "{Binding Value}" />
+                                    <Button Text="Image" Grid.Column="2"  />
+                                    <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteArrangement" CommandParameter="{Binding Key}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

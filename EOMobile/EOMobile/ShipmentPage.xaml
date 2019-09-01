@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EOMobile.ShipmentPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Elegant Orchids Shipments"
+                FontSize="Medium"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="StartAndExpand" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Vendor"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Picker x:Name="Vendor"  ItemDisplayBinding="{Binding Value}" Grid.Column="0" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Shipment Date"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <DatePicker x:Name="ShipmentDate"  Grid.Column="1" Grid.Row="1" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Inventory"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Button x:Name="Search"  Text="Search" Clicked="OnInventorySearchClicked" Grid.Column="2" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+
+                <Button x:Name="Save"  Text="Save" Clicked="OnInventorySearchClicked" Grid.Column="3" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+            </Grid>
+
+            <Frame Padding="10,10,10,10">
+                <ListView x:Name="ShipmentItemsListView" ItemsSource="{Binding Orders}" HorizontalOptions="Start">
+
+                    <ListView.Header>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="Inventory Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Quantity"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Edit"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Delete"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
+                        </Grid>
+                    </ListView.Header>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid HorizontalOptions="Center" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25*" />
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding InventoryName}" HorizontalOptions="Start" />
+                                    <Editor x:Name="Quantity" Text="{Binding Quantity, Mode=TwoWay}" Grid.Column="1" HorizontalOptions="Start"  />
+                                    <Button Text="Image" Grid.Column="2" HorizontalOptions="Start" />
+                                    <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteShipmentItem" CommandParameter="{Binding Key}" HorizontalOptions="Start" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

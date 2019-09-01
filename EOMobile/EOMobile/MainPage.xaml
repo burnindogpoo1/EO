@@ -4,21 +4,33 @@
              x:Class="EOMobile.MainPage">
     <ContentPage.Content>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
+
             <Label Text="Elegant Orchids Administration"
+                FontSize="Medium"
+                Grid.Column="0"
+                Grid.Row="0"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <Button Text="Inventory"  Clicked="OnInventoryClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="0"/>
-            <Button Text="Arrangements" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="0"/>
-            <Button Text="Work Orders" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="1"/>
-            <Button Text="Customers" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="1"/>
-            <Button Text="Vendors" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="2"/>
-            <Button Text="Shipments" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="2"/>
-            <Button Text="Reports" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="3"/>
+            <Button Text="Inventory"  Clicked="OnInventoryClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="1"/>
+            <Button Text="Arrangements"  Clicked="OnArrangementsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="1"/>
+            <Button Text="Work Orders" Clicked="OnWorkOrdersClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="2"/>
+            <Button Text="Customers" Clicked="OnCustomersClicked" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="2"/>
+            <Button Text="Vendors" Clicked="OnVendorsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="3"/>
+            <Button Text="Shipments" Clicked="OnShipmentsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="3"/>
+            <Button Text="Reports" Clicked="OnReportsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="4"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

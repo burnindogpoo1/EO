@@ -19,7 +19,37 @@ namespace EOMobile
 
         public void OnInventoryClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new NavigationPage(new InventoryPage()));
+            Navigation.PushAsync(new InventoryPage());
         }
-	}
+
+        public void OnArrangementsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ArrangementPage());
+        }
+
+        public void OnWorkOrdersClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new WorkOrderPage());
+        }
+
+        public void OnCustomersClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CustomerPage());
+        }
+
+        public void OnVendorsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new VendorPage());
+        }
+
+        public void OnShipmentsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ShipmentPage());
+        }
+
+        public void OnReportsClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ReportsPage());
+        }
+    }
 }

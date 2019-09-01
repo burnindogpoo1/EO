@@ -5,32 +5,58 @@
              x:Class="EOMobile.LoginPage">
 
     <StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
         <!-- Place new controls here -->
         <Label Text="Elegant Orchids" 
+           FontSize="Medium"
+           Grid.Column="1"
+           Grid.Row="0"
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
 
         <Label Text="Name"
+               Grid.Column="1"
+               Grid.Row="1"
                HorizontalOptions="Center"
                FontAttributes="Bold" />
         <Editor x:Name="Name"
-                HeightRequest="100"
-                WidthRequest="300"/>
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                HeightRequest="50"
+                WidthRequest="200"/>
         <Label Text="Password"
+               Grid.Column="1"
+               Grid.Row="3"
                HorizontalOptions="Center"
                FontAttributes="Bold" />
         <Editor x:Name="Password"
-                HeightRequest="100" 
-                WidthRequest="300"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Text="Save"
-                    HeightRequest="100"
-                    WidthRequest="300"
-                    Clicked="OnSaveButtonClicked" />
+                Grid.Column="1"
+                Grid.Row="4"
+                HorizontalOptions="Center"
+                HeightRequest="50" 
+                WidthRequest="200"/>
+        
+            <Button Text="Log In"
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    HorizontalOptions="Center"
+                    HeightRequest="50"
+                    WidthRequest="200"
+                    Clicked="OnLoginButtonClicked" />
         </Grid>
     </StackLayout>
 
