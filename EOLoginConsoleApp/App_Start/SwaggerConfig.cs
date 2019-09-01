@@ -2,6 +2,11 @@ using System.Web.Http;
 using WebActivatorEx;
 using EOLoginConsoleApp;
 using Swashbuckle.Application;
+using System;
+using System.IO;
+using System.Reflection;
+using Swashbuckle.Swagger;
+using System.Collections.Generic;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -112,7 +117,9 @@ namespace EOLoginConsoleApp
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(GetXmlCommentsPathControllers());
+
+                        c.IncludeXmlComments(GetXmlCommentsPathViewModels());
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -228,7 +235,7 @@ namespace EOLoginConsoleApp
                         // Specify which HTTP operations will have the 'Try it out!' option. An empty paramter list disables
                         // it for all operations.
                         //
-                        //c.SupportedSubmitMethods("GET", "HEAD");
+                        c.SupportedSubmitMethods("GET", "POST","HEAD");
 
                         // Use the CustomAsset option to provide your own version of assets used in the swagger-ui.
                         // It's typically used to instruct Swashbuckle to return your version instead of the default
@@ -261,6 +268,24 @@ namespace EOLoginConsoleApp
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
                     });
+        }
+
+        protected static string GetXmlCommentsPathControllers()
+        {
+            string xmlPath = String.Empty;
+
+            //xmlPath = @"C:\Users\burni\source\repos\EO\LoginService\EOLoginConsoleApp\LoginController\bin\Debug\LoginController.xml";
+            xmlPath = @"C:\Users\vweeks\source\repos\EO\EO\LoginService\EOLoginConsoleApp\EOLoginConsoleApp\bin\Debug\LoginController.xml";
+            return xmlPath;
+        }
+
+        protected static string GetXmlCommentsPathViewModels()
+        {
+            string xmlPath = String.Empty;
+            
+            //xmlPath = @"C:\Users\burni\source\repos\EO\LoginService\EOLoginConsoleApp\ViewModels\bin\Debug\ViewModels.xml";
+            xmlPath = @"C:\Users\vweeks\source\repos\EO\EO\LoginService\EOLoginConsoleApp\EOLoginConsoleApp\bin\Debug\ViewModels.xml";
+            return xmlPath;
         }
     }
 }

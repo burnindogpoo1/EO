@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ViewModels</name>
+    </assembly>
+    <members>
+        <member name="P:ViewModels.DataModels.FoliageDTO.FoliageId">
+            <summary>
+            Primary key
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.FoliageDTO.FoliageName">
+            <summary>
+            This material's name
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.FoliageDTO.FoliageSize">
+            <summary>
+            This material's size
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.FoliageDTO.FoliageTypeId">
+            <summary>
+            
+            This material's type
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.InventoryDTO.InventoryId">
+            <summary>
+            Primary key
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.InventoryDTO.InventoryName">
+            <summary>
+            This inventory item's name
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.InventoryDTO.Quantity">
+            <summary>
+            Quantity on hand
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.InventoryDTO.NotifyWhenLowAmount">
+            <summary>
+            Alert when qty reaches this value
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.InventoryDTO.ServiceCodeId">
+            <summary>
+            This inventory item's service code
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.InventoryDTO.InventoryTypeId">
+            <summary>
+            This inventory item's type
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.MaterialDTO.MaterialId">
+            <summary>
+            Primary key
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.MaterialDTO.MaterialName">
+            <summary>
+            This material's name
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.MaterialDTO.MaterialSize">
+            <summary>
+            This material's size
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.MaterialDTO.MaterialTypeId">
+            <summary>
+            
+            This material's type
+            </summary>
+        </member>
+        <member name="T:ViewModels.DataModels.PlantDTO">
+            <summary>
+            A Plant
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.PlantDTO.PlantId">
+            <summary>
+            Primary key
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.PlantDTO.PlantName">
+            <summary>
+            This plant's name
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.PlantDTO.PlantSize">
+            <summary>
+            This plant's size
+            </summary>
+        </member>
+        <member name="P:ViewModels.DataModels.PlantDTO.PlantTypeId">
+            <summary>
+            
+            This plant's type
+            </summary>
+        </member>
+        <member name="T:EO.ViewModels.ControllerModels.ApiResponse">
+            <summary>
+            Base object for Response objects
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.ControllerModels.ApiResponse.Success">
+            <summary>
+            Success
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.ControllerModels.ApiResponse.Messages">
+            <summary>
+            Error Messages
+            </summary>
+        </member>
+        <member name="T:EO.ViewModels.ControllerModels.LoginRequest">
+            <summary>
+            Login with username and password
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.ControllerModels.LoginRequest.Login">
+            <summary>
+            Login data object
+            </summary>
+        </member>
+        <member name="T:EO.ViewModels.ControllerModels.LoginResponse">
+            <summary>
+            Response to login with username and password
+            </summary>
+        </member>
+        <member name="T:EO.ViewModels.DataModels.LoginDTO">
+            <summary>
+            Login object
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.DataModels.LoginDTO.UserId">
+            <summary>
+            User ID
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.DataModels.LoginDTO.RoleId">
+            <summary>
+            Role Id
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.DataModels.LoginDTO.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:EO.ViewModels.DataModels.LoginDTO.Password">
+            <summary>
+            password
+            </summary>
+        </member>
+    </members>
+</doc>

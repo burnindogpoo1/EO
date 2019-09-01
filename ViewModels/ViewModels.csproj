@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>ViewModels.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,10 +43,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerModels\AddCustomerRequest.cs" />
+    <Compile Include="ControllerModels\AddInventoryRequest.cs" />
+    <Compile Include="ControllerModels\AddPlantNameRequest.cs" />
+    <Compile Include="ControllerModels\AddServiceCodeResponse.cs" />
+    <Compile Include="ControllerModels\AddShipmentRequest.cs" />
+    <Compile Include="ControllerModels\AddVendorRequest.cs" />
+    <Compile Include="ControllerModels\AddWorkOrderRequest.cs" />
     <Compile Include="ControllerModels\ApiResponse.cs" />
+    <Compile Include="ControllerModels\GetContainerTypeResponse.cs" />
+    <Compile Include="ControllerModels\GetCustomerResponse.cs" />
+    <Compile Include="ControllerModels\GetByteArrayResponse.cs" />
+    <Compile Include="ControllerModels\GetInventoryResponse.cs" />
+    <Compile Include="ControllerModels\GetInventoryTypeResponse.cs" />
+    <Compile Include="ControllerModels\GetKvpLongStringResponse.cs" />
+    <Compile Include="ControllerModels\GetPersonRequest.cs" />
+    <Compile Include="ControllerModels\GetPersonResponse.cs" />
+    <Compile Include="ControllerModels\GetPlantNameResponse.cs" />
+    <Compile Include="ControllerModels\GetPlantTypeResponse.cs" />
+    <Compile Include="ControllerModels\GetServiceCodeResponse.cs" />
+    <Compile Include="ControllerModels\GetShipmentResponse.cs" />
+    <Compile Include="ControllerModels\GetSizeResponse.cs" />
+    <Compile Include="ControllerModels\GetVendorResponse.cs" />
+    <Compile Include="ControllerModels\GetWorkOrderSalesDetailResponse.cs" />
+    <Compile Include="ControllerModels\ImportPersonRequest.cs" />
+    <Compile Include="ControllerModels\ListFilters.cs" />
     <Compile Include="ControllerModels\LoginRequest.cs" />
     <Compile Include="ControllerModels\LoginResponse.cs" />
+    <Compile Include="ControllerModels\WorkOrderRequest.cs" />
+    <Compile Include="ControllerModels\WorkOrderResponse.cs" />
+    <Compile Include="DataModels\AddressDTO.cs" />
+    <Compile Include="DataModels\ArrangementDTO.cs" />
+    <Compile Include="DataModels\ArrangementInventoryDTO.cs" />
+    <Compile Include="DataModels\ArrangementInventoryFilteredItem.cs" />
+    <Compile Include="DataModels\ArrangementInventoryItemDTO.cs" />
+    <Compile Include="DataModels\ContainerDTO.cs" />
+    <Compile Include="DataModels\ContainerInventoryDTO.cs" />
+    <Compile Include="DataModels\ContainerNameDTO.cs" />
+    <Compile Include="DataModels\FoliageDTO.cs" />
+    <Compile Include="DataModels\FoliageInventoryDTO.cs" />
+    <Compile Include="DataModels\InventoryDTO.cs" />
+    <Compile Include="DataModels\InventoryListDTO.cs" />
+    <Compile Include="DataModels\InventoryTypeDTO.cs" />
     <Compile Include="DataModels\LoginDTO.cs" />
+    <Compile Include="DataModels\MaterialDTO.cs" />
+    <Compile Include="DataModels\MaterialInventoryDTO.cs" />
+    <Compile Include="DataModels\PersonAndAddressDTO.cs" />
+    <Compile Include="DataModels\PersonDTO.cs" />
+    <Compile Include="DataModels\PlantDTO.cs" />
+    <Compile Include="DataModels\PlantInventoryDTO.cs" />
+    <Compile Include="DataModels\PlantNameDTO.cs" />
+    <Compile Include="DataModels\PlantTypeDTO.cs" />
+    <Compile Include="DataModels\ServiceCodeDTO.cs" />
+    <Compile Include="DataModels\ShipmentDTO.cs" />
+    <Compile Include="DataModels\ShipmentInventoryDTO.cs" />
+    <Compile Include="DataModels\ShipmentInventoryMapDTO.cs" />
+    <Compile Include="DataModels\ShipmentInventoryItemDTO.cs" />
+    <Compile Include="DataModels\VendorDTO.cs" />
+    <Compile Include="DataModels\WorkOrderDTO.cs" />
+    <Compile Include="DataModels\WorkOrderInventoryDTO.cs" />
+    <Compile Include="DataModels\WorkOrderInventoryItemDTO.cs" />
+    <Compile Include="DataModels\WorkOrderInventoryMapDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
