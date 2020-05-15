@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EOMobile.CustomerPage">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout>
             <Label Text="Elegant Orchids Customers"
                    FontSize="Medium"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="33*"/>
@@ -111,12 +112,14 @@
                         HorizontalOptions="Start" />
                 <Picker x:Name="Community"   Grid.Column="0" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
 
+                <Button x:Name="Clear"  Text="Clear" Clicked="Clear_Clicked" Grid.Column="1" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
+                
                 <Button x:Name="Save"  Text="Save" Clicked="OnSaveCustomerClicked" Grid.Column="2" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
 
             </Grid>
 
             <Frame Padding="10,10,10,10">
-                <ListView  x:Name="CustomerListView" ItemsSource="{Binding Orders}" HorizontalOptions="Start" >
+                <ListView  x:Name="CustomerListView" ItemsSource="{Binding Orders}">
 
                     <ListView.Header>
                         <Grid >
@@ -125,21 +128,21 @@
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
+                                </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Label Text="Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="Phone"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="Email"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="Delete"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
-                        </Grid>
+                            <Label Text="Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            <Label Text="Phone"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            <Label Text="Email"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                            <Label Text="Delete"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                         </Grid>
                     </ListView.Header>
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid  HorizontalOptions="Center" >
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="2*"/>
@@ -149,9 +152,9 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Column="0" Text="{Binding Person.CustomerName}" HorizontalOptions="Start" />
-                                    <Label Text="{Binding Person.phone_primary}" Grid.Column="1"  HorizontalOptions="Start" />
-                                    <Label Text="{Binding Person.email}" Grid.Column="2" HorizontalOptions="Start" />
+                                    <Label Grid.Column="0" Text="{Binding Person.CustomerName}" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label Text="{Binding Person.phone_primary}" Grid.Column="1"  HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label Text="{Binding Person.email}" Grid.Column="2" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
                                     <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteCustomerClicked" CommandParameter="{Binding Person.person_id}" HorizontalOptions="Start" />
                                 </Grid>
                             </ViewCell>
@@ -160,5 +163,6 @@
                 </ListView>
             </Frame>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

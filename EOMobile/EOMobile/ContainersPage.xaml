@@ -5,39 +5,68 @@
     <ContentPage.Content>
 
         <StackLayout>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
+            <Label Text="Elegant Orchids Containers" HeightRequest="50" WidthRequest="200" FontSize="Medium"/>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
+            <Frame CornerRadius="1" HasShadow="true" Margin="10" BackgroundColor="Transparent" BorderColor="LightGray" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
 
-                <Label Text="Elegant Orchids Containers"
-                    HeightRequest="50" WidthRequest="200"
-                    Grid.Column="0" Grid.Row="0" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
 
-                <Label Text="Container Type" HeightRequest="50" WidthRequest="200" Grid.Column="0" Grid.Row="1" />
-                <Picker Title="pick one" x:Name="ContainerType" ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="2"/>
-                <Label Text="Container Name" HeightRequest="50" WidthRequest="200" Grid.Column="1" Grid.Row="1" />
-                <Picker Title="pick one" x:Name="ContainerName"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}" HeightRequest="50" WidthRequest="200" Grid.Column="1" Grid.Row="2"/>
-                <Label Text="Container Size" HeightRequest="50" WidthRequest="200" Grid.Column="2" Grid.Row="1" />
-                <Picker Title="pick one" x:Name="ContainerSize"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}" HeightRequest="50" WidthRequest="200" Grid.Column="2" Grid.Row="2"/>
-            </Grid>
 
-            <ListView x:Name="containerListView" Margin="0,10,0,10">
+
+                    <Label Text="Container Type" HeightRequest="50" WidthRequest="200" Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Picker Title="pick one" x:Name="ContainerType" ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="1" HorizontalOptions="Start" />
+                    <Label Text="Container Name" HeightRequest="50" WidthRequest="200" Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Picker Title="pick one" x:Name="ContainerName"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}" HeightRequest="50" WidthRequest="200" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start"/>
+                    <Label Text="Container Size" HeightRequest="50" WidthRequest="200" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Picker Title="pick one" x:Name="ContainerSize"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}" HeightRequest="50" WidthRequest="200" Grid.Column="2" Grid.Row="1" HorizontalOptions="Start"/>
+                </Grid>
+            </Frame>
+            
+            <ListView x:Name="containerListView" Margin="10,10,10,10">
+                <ListView.Header>
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*" />
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="25*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Text="Type" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                        <Label Text="Name"  FontAttributes="Bold" Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                        <Label Text="Size"  FontAttributes="Bold" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                        <Label Text="Quantity"  FontAttributes="Bold" Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                    </Grid>
+                </ListView.Header>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
-                                <Label Grid.Column="0" Text="{Binding Container.ContainerTypeName}" />
-                                <Label Grid.Column="1" Text="{Binding Container.ContainerName}"  />
-                                <Label Grid.Column="2" Text="{Binding Container.ContainerSize}" />
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25*" />
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Container.ContainerTypeName}" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                <Label Grid.Column="1" Text="{Binding Container.ContainerName}"  HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                <Label Grid.Column="2" Text="{Binding Container.ContainerSize}" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                <Label Grid.Column="3" Text="{Binding Inventory.Quantity}" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

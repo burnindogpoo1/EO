@@ -19,12 +19,17 @@ namespace EOMobile
 
         public void OnWorkOrderReportClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new WorkOrderReportPage());
+            Navigation.PushAsync(new TabbedWorkOrderReportPage());
         }
 
         public void OnShipmentReportClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ShipmentReportPage());
+            Navigation.PushAsync(new TabbedShipmentReportPage());
+        }
+
+        private void OnSiteServiceClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new TabbedSiteServiceReportPage());
         }
     }
 }

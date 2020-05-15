@@ -24,12 +24,12 @@ namespace EOMobile
 
         public void OnArrangementsClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ArrangementPage());
+            Navigation.PushAsync(new TabbedArrangementPage());
         }
 
         public void OnWorkOrdersClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new WorkOrderPage());
+            Navigation.PushAsync(new TabbedWorkOrderPage());
         }
 
         public void OnCustomersClicked(object sender, EventArgs e)
@@ -44,12 +44,17 @@ namespace EOMobile
 
         public void OnShipmentsClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ShipmentPage());
+            Navigation.PushAsync(new TabbedShipmentPage());
         }
 
         public void OnReportsClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new ReportsPage());
+        }
+
+        private void OnSiteServiceClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new TabbedSiteServicePage());
         }
     }
 }

@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EOMobile.WorkOrderPage">
+             x:Class="EOMobile.WorkOrderPage" Title="Work Orders">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout>
             <Label Text="Elegant Orchids Work Orders"
                 FontSize="Medium"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
@@ -29,91 +35,121 @@
                         Grid.Column="0"
                         Grid.Row="0"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
                 <Editor x:Name="Seller" Text="" Grid.Column="0" Grid.Row="1" HeightRequest="50" WidthRequest="200"/>
 
                 <Label Text="Buyer"
                         Grid.Column="1"
                         Grid.Row="0"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                <Editor x:Name="Buyer" Text="" Grid.Column="1" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
-
-
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Buyer" Text="" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" WidthRequest="200"/>
+                
                 <Label Text="Delivery Date"
                         Grid.Column="3"
                         Grid.Row="0"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
                 <DatePicker x:Name="DeliveryDate" Grid.Column="3" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
 
                 <Label Text="Inventory"
                         Grid.Column="0"
                         Grid.Row="2"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
                 <Button x:Name="Inventory" Clicked="OnInventorySearchClicked" Text="Search" Grid.Column="0" Grid.Row="3" HeightRequest="50" WidthRequest="200"/>
 
                 <Label Text="Customers"
                         Grid.Column="1"
                         Grid.Row="2"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
                 <Button x:Name="Customers" Clicked="OnCustomerSearchClicked" Text="Search" Grid.Column="1" Grid.Row="3"  HeightRequest="50" WidthRequest="200"/>
+                
+                <Button Text="Camera" Clicked="TakePictureClicked" Grid.Column="2" Grid.Row="3"/>
 
-                <Label Text="Sub Total"
+                <Label Text="Pickup/Delivery"
+                        Grid.Column="3"
+                        Grid.Row="2"
+                        FontSize="Default"
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Picker x:Name="DeliveryType"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}"  Grid.Column="3" Grid.Row="3"  HeightRequest="50" WidthRequest="200"/>
+
+                
+                <Label Text="Comments"
                         Grid.Column="0"
                         Grid.Row="4"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                <Editor x:Name="SubTotal" Text="" Grid.Column="0" Grid.Row="5"  HeightRequest="50" WidthRequest="200"/>
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Comments" Text="" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" Grid.RowSpan="2" HeightRequest="400" />
+        
+                <Label Text="Sub Total"
+                        Grid.Column="0"
+                        Grid.Row="7"
+                        FontSize="Default"
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="SubTotal" Text="" Grid.Column="0" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
 
                 <Label Text="Tax"
                         Grid.Column="1"
-                        Grid.Row="4"
+                        Grid.Row="7"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                <Editor x:Name="Tax" Text="" Grid.Column="1" Grid.Row="5"  HeightRequest="50" WidthRequest="200"/>
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Tax" Text="" Grid.Column="1" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
 
                 <Label Text="Total"
                         Grid.Column="2"
-                        Grid.Row="4"
+                        Grid.Row="7"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                <Editor x:Name="Total" Text="" Grid.Column="2" Grid.Row="5"  HeightRequest="50" WidthRequest="200"/>
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Total" Text="" Grid.Column="2" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Site Service?"
+                        Grid.Column="3"
+                        Grid.Row="7"
+                        FontSize="Default"
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Picker x:Name="ServiceType"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}"  Grid.Column="3" Grid.Row="8"  HeightRequest="50" WidthRequest="200"/>
+
                 
-                <Button x:Name="Save" Clicked="OnSaveWorkOrder" Text="Save" Grid.Column="3" Grid.Row="6"  HeightRequest="50" WidthRequest="200"/>
-            </Grid>
+                <Button x:Name="Save" Clicked="OnSaveWorkOrder" Text="Save" Grid.Column="0" Grid.Row="10"  HeightRequest="50" WidthRequest="200"/>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
-
-                <Label Text="Comments"
-                        Grid.Column="0"
-                        Grid.Row="0"
+                <Button x:Name="Clear" Clicked="OnClear" Text="Clear" Grid.Column="1" Grid.Row="10"  HeightRequest="50" WidthRequest="200"/>
+                
+                <Label Text="Payment Type"
+                        Grid.Column="2"
+                        Grid.Row="9"
                         FontSize="Default"
-                        VerticalOptions="CenterAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                <Editor x:Name="Comments" Text="" Grid.Column="0" Grid.Row="1"  HeightRequest="400" />
-            </Grid>
-            <Frame Padding="10,10,10,10">
-                <ListView  x:Name="InventoryItemsListView" ItemsSource="{Binding workOrderInventoryList}" HorizontalOptions="Start" >
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Picker x:Name="PaymentType"  ItemDisplayBinding="{Binding Value}" SelectedItem="{Binding SelectedItem}"  Grid.Column="2" Grid.Row="10"  HeightRequest="50" WidthRequest="200"/>
+                
+                <Label Text="Pay"
+                        Grid.Column="3"
+                        Grid.Row="9"
+                        FontSize="Default"
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" />
+                <Button x:Name="Payment" Text="Pay" Clicked="Payment_Clicked"  Grid.Column="3" Grid.Row="10"  HeightRequest="50" WidthRequest="200"/>
 
+                
+            </Grid>
+
+            
+            
+            <Frame Padding="10,10,10,10">
+                <ListView  x:Name="InventoryItemsListView" ItemsSource="{Binding workOrderInventoryList}" >
                     <ListView.Header>
                         <Grid >
                             <Grid.ColumnDefinitions>
@@ -125,9 +161,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Label Text="Inventory Name"  Grid.Column="0" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
-                            <Label Text="Quantity"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
-                            <Label Text="Image"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                            <Label Text="Inventory Name"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            <Label Text="Quantity"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
                             <Label Text="Delete"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
                         </Grid>
                     </ListView.Header>
@@ -135,7 +170,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid HorizontalOptions="Start" >
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="25*" />
                                         <ColumnDefinition Width="25*"/>
@@ -145,10 +180,9 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Column="0" Text="{Binding InventoryName}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
-                                    <Editor x:Name="Quantity" Text="{Binding Quantity, Mode=TwoWay}" Grid.Column="1" PropertyChanged="Quantity_PropertyChanged" />
-                                    <Button Text="Image" Grid.Column="2"  />
-                                    <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteWorkOrderItem" CommandParameter="{Binding Key}"/>
+                                    <Label Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding InventoryName}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Editor x:Name="Quantity" Text="{Binding Quantity, Mode=TwoWay}" Grid.Column="2" PropertyChanged="Quantity_PropertyChanged" HorizontalOptions="Start"/>
+                                    <Button Text="Delete"  Grid.Column="3" Clicked="OnDeleteWorkOrderItem" CommandParameter="{Binding InventoryId}" HorizontalOptions="Start"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -156,5 +190,6 @@
                 </ListView>
             </Frame>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

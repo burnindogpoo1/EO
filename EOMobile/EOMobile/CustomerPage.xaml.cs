@@ -1,4 +1,6 @@
-﻿using EO.ViewModels.ControllerModels;
+﻿using Android.App;
+using EO.ViewModels.ControllerModels;
+using EOMobile.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -106,18 +108,26 @@ namespace EOMobile
         {
             AddCustomerRequest request = new AddCustomerRequest();
 
-            request.Customer.Person.first_name = FirstName.Text;
-            request.Customer.Person.last_name = LastName.Text;
-            request.Customer.Person.email = Email.Text;
-            request.Customer.Person.phone_primary = Phone.Text;
+            if (!String.IsNullOrEmpty(FirstName.Text) && !String.IsNullOrEmpty(LastName.Text) &&
+                !String.IsNullOrEmpty(Phone.Text) && !String.IsNullOrEmpty(Email.Text))
+            {
+                request.Customer.Person.first_name = FirstName.Text;
+                request.Customer.Person.last_name = LastName.Text;
+                request.Customer.Person.email = Email.Text;
+                request.Customer.Person.phone_primary = Phone.Text;
 
-            request.Customer.Address.street_address = Address.Text;
-            request.Customer.Address.unit_apt_suite = Address2.Text;
-            request.Customer.Address.city = City.Text;
-            request.Customer.Address.state = State.Text;
-            request.Customer.Address.zipcode = Zip.Text;
+                request.Customer.Address.street_address = Address.Text;
+                request.Customer.Address.unit_apt_suite = Address2.Text;
+                request.Customer.Address.city = City.Text;
+                request.Customer.Address.state = State.Text;
+                request.Customer.Address.zipcode = Zip.Text;
 
-            SaveCustomer(request);
+                SaveCustomer(request);
+            }
+            else
+            {
+                DisplayAlert("Error", "To save a customer, enter at least First and Last Name, Phone and Email", "Ok");
+            }
         }
 
         private void SaveCustomer(AddCustomerRequest request)
@@ -125,7 +135,7 @@ namespace EOMobile
             try
             {
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+                client.BaseAddress = new Uri(((App)App.Current).LAN_Address);
                 //client.DefaultRequestHeaders.Add("appkey", "myapp_key");
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
@@ -141,7 +151,7 @@ namespace EOMobile
                     Stream streamData = httpResponse.Content.ReadAsStreamAsync().Result;
                     StreamReader strReader = new StreamReader(streamData);
                     string strData = strReader.ReadToEnd();
-                    strReader.Close();
+                    //strReader.Close();
                     ApiResponse apiResponse = JsonConvert.DeserializeObject<ApiResponse>(strData);
 
                     if (apiResponse.Messages.Count > 0)
@@ -180,6 +190,20 @@ namespace EOMobile
             var c = list1.Where(a => a.Person.person_id == itemId).First();
 
             list1.Remove(c);
+        }
+
+        private void Clear_Clicked(object sender, EventArgs e)
+        {
+            FirstName.Text = String.Empty;
+            LastName.Text = String.Empty;
+            Phone.Text = String.Empty;
+            Email.Text = String.Empty;
+            Address.Text = String.Empty;
+            Address2.Text = String.Empty;
+            City.Text = String.Empty;
+            State.Text = String.Empty;
+            Zip.Text = String.Empty;
+
         }
     }
 }

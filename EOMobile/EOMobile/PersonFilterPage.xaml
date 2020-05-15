@@ -78,7 +78,7 @@
             </Grid>
 
             <Frame Padding="10,10,10,10">
-                <ListView ItemsSource="{Binding Orders}" HorizontalOptions="Start">
+                <ListView x:Name="PersonListView" ItemSelected="PersonListView_ItemSelected"  ItemsSource="{Binding Persons}" > 
                     <ListView.Header>
                         <Grid >
                             <Grid.ColumnDefinitions>
@@ -90,16 +90,16 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Label Text="Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start"/>
-                            <Label Text="Address"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="Phone"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="Email"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="Name"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                            <Label Text="Address"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                            <Label Text="Phone"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                            <Label Text="Email"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
                         </Grid>
                     </ListView.Header>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Style="{StaticResource GridInListViewStyle}" HorizontalOptions="Start" >
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="25*" />
                                         <ColumnDefinition Width="25*"/>
@@ -109,12 +109,10 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <!--<StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Padding="10, 0, 0, 0">
-                                        <Label Text="{Binding ProductName}" VerticalOptions="Center" />
-                                        <StackLayout>
-                                            <Entry Keyboard="Numeric" Grid.Column="1" Grid.Row="0" VerticalOptions="Center"/>
-                                         </StackLayout>
-                                    </StackLayout>-->
+                                    <Label Grid.Column="0" Text="{Binding Person.first_name}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label Grid.Column="1" Text="{Binding Address.street_address}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                                    <Label Grid.Column="2" Text="{Binding Person.phone_primary}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                                    <Label Grid.Column="3" Text="{Binding Person.email}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

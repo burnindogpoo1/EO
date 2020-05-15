@@ -39,7 +39,7 @@ namespace EOMobile
 
         public void OnArrangementsClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ArrangementPage());
+            Navigation.PushAsync(new TabbedArrangementPage());
         }
 
         //public void OnImportClicked(object sender, EventArgs e)

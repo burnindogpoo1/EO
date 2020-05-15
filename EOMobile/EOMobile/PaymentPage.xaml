@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EOMobile.PaymentPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Elegant Orchids Credit Card Payment"
+                FontSize="Medium"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="ErrorMessages" Text=""
+                TextColor="Red"
+                FontSize="Medium"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+
+                <Label Text="Name On Card"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="NameOnCard" Text="" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Card Number"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="CardNumber" Text="" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Expiration Month"
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="ExpirationMonth" Text="" Grid.Column="0" Grid.Row="3" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Expiration Year"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="ExpirationYear" Text="" Grid.Column="1" Grid.Row="3"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Security Code"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Editor x:Name="CVV" Text="" Grid.Column="2" Grid.Row="3"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Back"
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Button x:Name="Back" Text="Back" Clicked="Back_Clicked" Grid.Column="0" Grid.Row="5"  HeightRequest="50" WidthRequest="200"/>
+                
+                <Label Text="Pay"
+                        Grid.Column="2"
+                        Grid.Row="4"
+                        FontSize="Default"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                <Button x:Name="Pay" Text="Pay" Clicked="Pay_Clicked" Grid.Column="2" Grid.Row="5"  HeightRequest="50" WidthRequest="200"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

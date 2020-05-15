@@ -70,7 +70,7 @@ namespace EOMobile
             try
             {
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+                client.BaseAddress = new Uri(((App)App.Current).LAN_Address);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("plain/text"));
 
                 client.DefaultRequestHeaders.Add("EO-Header", User + " : " + Pwd);
@@ -103,7 +103,7 @@ namespace EOMobile
             {
                 HttpClient client = new HttpClient();
                 //client.BaseAddress = new Uri("http://localhost:9000/");
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+                client.BaseAddress = new Uri(((App)App.Current).LAN_Address);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("plain/text"));
 
                 client.DefaultRequestHeaders.Add("EO-Header", User + " : " + Pwd);
@@ -134,7 +134,7 @@ namespace EOMobile
             try
             {
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+                client.BaseAddress = new Uri("http://192.168.1.2:9000/");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 client.DefaultRequestHeaders.Add("EO-Header", User + " : " + Pwd);
@@ -146,7 +146,7 @@ namespace EOMobile
                     Stream streamData = httpResponse.Content.ReadAsStreamAsync().Result;
                     StreamReader strReader = new StreamReader(streamData);
                     string strData = strReader.ReadToEnd();
-                    strReader.Close();
+                    //strReader.Close();
                     foliage = JsonConvert.DeserializeObject<GetFoliageResponse>(strData);
                 }
                 else

@@ -18,21 +18,29 @@ namespace EOMobile
         List<PlantInventoryDTO> plants = new List<PlantInventoryDTO>();
         List<PlantTypeDTO> plantTypes = new List<PlantTypeDTO>();
         List<PlantNameDTO> plantNames = new List<PlantNameDTO>();
+        List<KeyValuePair<long, string>> plantSizes = new List<KeyValuePair<long, string>>();
 
         List<FoliageInventoryDTO> foliage = new List<FoliageInventoryDTO>();
         List<FoliageTypeDTO> foliageTypes = new List<FoliageTypeDTO>();
         List<FoliageNameDTO> foliageNames = new List<FoliageNameDTO>();
+        List<KeyValuePair<long, string>> foliageSizes = new List<KeyValuePair<long, string>>();
+
 
         List<MaterialInventoryDTO> materials = new List<MaterialInventoryDTO>();
         List<MaterialTypeDTO> materialTypes = new List<MaterialTypeDTO>();
         List<MaterialNameDTO> materialNames = new List<MaterialNameDTO>();
+        List<KeyValuePair<long, string>> materialSizes = new List<KeyValuePair<long, string>>();
 
         List<ContainerTypeDTO> containerTypes = new List<ContainerTypeDTO>();
         List<ContainerNameDTO> containerNames = new List<ContainerNameDTO>();
         List<ContainerInventoryDTO> containers = new List<ContainerInventoryDTO>();
+        List<KeyValuePair<long, string>> containerSizes = new List<KeyValuePair<long, string>>();
 
-        public ArrangementFilterPage()
+        ContentPage Initiator;
+        public ArrangementFilterPage(ContentPage initiator)
         {
+            Initiator = initiator;
+
             InitializeComponent();
 
             inventoryTypeList = ((App)App.Current).GetInventoryTypes();
@@ -41,6 +49,38 @@ namespace EOMobile
             foreach (InventoryTypeDTO type in inventoryTypeList)
             {
                 list1.Add(new KeyValuePair<long, string>(type.InventoryTypeId, type.InventoryTypeName));
+
+                long index = 1;
+                switch(type.InventoryTypeId)
+                {
+                    case 1:  //orchids
+                        ((App)App.Current).GetSizeByInventoryType(type.InventoryTypeId).ForEach(item =>
+                        {
+                            plantSizes.Add(new KeyValuePair<long, string>(index++, item));
+                        });
+                        break;
+
+                    case 2:  //containers
+                        ((App)App.Current).GetSizeByInventoryType(type.InventoryTypeId).ForEach(item =>
+                        {
+                            containerSizes.Add(new KeyValuePair<long, string>(index++, item));
+                        });
+                        break;
+
+                    case 4:  //foliage
+                        ((App)App.Current).GetSizeByInventoryType(type.InventoryTypeId).ForEach(item =>
+                        {
+                            containerSizes.Add(new KeyValuePair<long, string>(index++, item));
+                        });
+                        break;
+
+                    case 5:  //materials
+                        ((App)App.Current).GetSizeByInventoryType(type.InventoryTypeId).ForEach(item =>
+                        {
+                            materialSizes.Add(new KeyValuePair<long, string>(index++, item));
+                        });
+                        break;
+                }
             }
 
             InventoryType.ItemsSource = list1;
@@ -56,34 +96,27 @@ namespace EOMobile
         {
             ArrangementInventoryFilteredItem item = (sender as ListView).SelectedItem as ArrangementInventoryFilteredItem;
 
-            WorkOrderInventoryItemDTO wo = new WorkOrderInventoryItemDTO();
-
             if (item != null)
             {
+                if (Initiator is ShipmentPage)
+                {
+                    ShipmentInventoryItemDTO so = new ShipmentInventoryItemDTO(0, item.Id, item.Name, item.Size, 0);
 
-                wo = new WorkOrderInventoryItemDTO(0,item.Id,item.Name,0);
+                    MessagingCenter.Send<ShipmentInventoryItemDTO>(so, "SearchShipmentInventory");
+                }
+                else if(Initiator is ArrangementPage)
+                {
+                    ArrangementInventoryDTO ao = new ArrangementInventoryDTO(0, item.Id, item.Name, item.Size, 0);
 
-                //save this to a variable in app
-                int debug = 1;
-                //    if (arrangementParentWnd != null)
-                //    {
-                //        arrangementParentWnd.AddInventorySelection(item.Id, item.Name);
-                //        arrangementParentWnd = null;
-                //    }
-                //    else if (workOrderParentWnd != null)
-                //    {
-                //        workOrderParentWnd.AddInventorySelection(item.Id, item.Name);
-                //        workOrderParentWnd = null;
-                //    }
-                //    else if (shipmentParentWnd != null)
-                //    {
-                //        shipmentParentWnd.AddInventorySelection(item.Id, item.Name);
-                //        shipmentParentWnd = null;
-                //    }
+                    MessagingCenter.Send<ArrangementInventoryDTO>(ao, "SearchArrangementInventory");
+                }
+                else
+                {
+                    WorkOrderInventoryItemDTO wo = new WorkOrderInventoryItemDTO(0, item.Id, item.Name, item.Size, 0);
+
+                    MessagingCenter.Send<WorkOrderInventoryItemDTO>(wo, "SearchInventory");
+                }
             }
-            //this.Close();
-
-            MessagingCenter.Send<ArrangementFilterPage, WorkOrderInventoryItemDTO>(this, "UseFilter", wo);
 
             Navigation.PopModalAsync();
         }

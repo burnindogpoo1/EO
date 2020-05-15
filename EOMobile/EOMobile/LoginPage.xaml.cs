@@ -13,6 +13,10 @@ namespace EOMobile
 {
     public partial class LoginPage : ContentPage
     {
+        public string LAN_Address
+        {
+            get { return ((App)App.Current).LAN_Address; }
+        }
         public string User 
         {
             get { return ((App)App.Current).User; }
@@ -32,14 +36,17 @@ namespace EOMobile
 
         void OnLoginButtonClicked(object sender, EventArgs e)
         {
+            string message = String.Empty;
+
             try
             {
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+
+                client.BaseAddress = new Uri(((App)App.Current).LAN_Address);
 
                 client.DefaultRequestHeaders.Accept.Add(
                    new MediaTypeWithQualityHeaderValue("application/json"));
-                
+
                 User = this.Name.Text;
                 Pwd = this.Password.Text;
 
@@ -50,24 +57,38 @@ namespace EOMobile
                 string jsonData = JsonConvert.SerializeObject(request);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                 HttpResponseMessage httpResponse = client.PostAsync("api/Login/Login", content).Result;
+
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     IEnumerable<string> values;
                     httpResponse.Headers.TryGetValues("EO-Header", out values);
                     if (values != null && values.ToList().Count == 1)
                     {
-                        // this.MainContent.Content = new Frame() { Content = new DashboardPage() };
                         Navigation.PushAsync(new MainPage());
                     }
-                    else
+                }
+                else
+                {
+                    if(httpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden || 
+                        httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                     {
-                       // MessageBox.Show("Unrecognized username / password");
+                        message = "Unrecognized username / password";
                     }
                 }
             }
             catch (Exception ex)
             {
-
+                if (ex.Message.Contains("failed to connect"))
+                {
+                    message = "Device not connected to network";
+                }
+            }
+            finally
+            {
+                if (!String.IsNullOrEmpty(message))
+                {
+                    DisplayAlert("Error", message, "Ok");
+                }
             }
         }
     }

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EOMobile.SiteServiceReportPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+            <Label Text="Elegant Orchids Site Service Reports"
+                   FontSize="Medium"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="From"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start" />
+                <DatePicker x:Name="SiteServiceFromDate"  Grid.Column="0" Grid.Row="1" HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="To"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    FontSize="Default"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start" />
+                <DatePicker x:Name="SiteServiceToDate"  Grid.Column="1" Grid.Row="1" HeightRequest="50" WidthRequest="200"/>
+
+                <Button x:Name="ShowSiteServiceReports" Text="Show Reports" Clicked="ShowSiteServiceReports_Clicked" Grid.Column="2" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+            </Grid>
+
+            <Frame Padding="10,10,10,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ListView  x:Name="ShipmentList" ItemsSource="{Binding Shipment}" HorizontalOptions="Start" Grid.Column="0" Grid.Row="1">
+                        <ListView.Header>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25*" />
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Text="Service Date"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" />
+                                <Label Text="Serviced By"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
+                                <Label Text="Items"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
+                                <Label Text="Edit"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
+                            </Grid>
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid  HorizontalOptions="Start" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25*" />
+                                            <ColumnDefinition Width="25*"/>
+                                            <ColumnDefinition Width="25*"/>
+                                            <ColumnDefinition Width="25*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label  Text="{Binding ShipmentDate}" Grid.Column="0" HorizontalOptions="Start" />
+                                        <Label  Text="{Binding VendorName}" Grid.Column="1" HorizontalOptions="Start" />
+                                        <Button Text="Items" Grid.Column="2" Clicked="ShowInventory_Clicked" CommandParameter="{Binding}" HorizontalOptions="Start" />
+                                        <Button Text="Edit"  Grid.Column="3" Clicked="EditInventory_Clicked" CommandParameter="{Binding Key}" HorizontalOptions="Start" />
+
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Frame>
+
+            <Frame>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ListView  x:Name="InventoryList" ItemsSource="{Binding Orders}" HorizontalOptions="Start" Grid.Column="0" Grid.Row="1">
+                        <ListView.Header>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50*" />
+                                    <ColumnDefinition Width="50*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Text="InventoryName"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start"/>
+                                <Label Text="Quantity"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start"/>
+                            </Grid>
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid  HorizontalOptions="Start" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50*" />
+                                            <ColumnDefinition Width="50*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label  Text="{Binding InventoryName}" Grid.Column="0" HorizontalOptions="Start" />
+                                        <Label  Text="{Binding Quantity}" Grid.Column="1" HorizontalOptions="Start" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Frame>
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

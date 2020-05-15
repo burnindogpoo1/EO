@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EOMobile.SiteServicePage" Title="On Site Service">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+            <Label Text="Elegant Orchids On Site Service"
+                VerticalOptions="Start" FontSize="Medium"
+                HorizontalOptions="Center" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Serviced By"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="ServicedBy" Text="" Grid.Column="0" Grid.Row="1"  Grid.ColumnSpan="4" HeightRequest="400" />
+
+                <Label Text="Customer"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Customer" Text="" Grid.Column="1" Grid.Row="1"  Grid.ColumnSpan="4" HeightRequest="400" />
+
+                <Label Text="Service Date"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                <DatePicker x:Name="DeliveryDate" Grid.Column="2" Grid.Row="1"  HeightRequest="50" WidthRequest="200"/>
+
+                <Button Text="Camera" Clicked="TakePictureClicked" Grid.Column="0" Grid.Row="3"/>
+
+                <Label Text="Customers"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                <Button x:Name="SearchCustomers" Clicked="Customers_Clicked" Text="Search" Grid.Column="1" Grid.Row="3"  HeightRequest="50" WidthRequest="200"/>
+
+                <Label Text="Inventory"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                <Button x:Name="Inventory" Clicked="Inventory_Clicked" Text="Search" Grid.Column="2" Grid.Row="3" HeightRequest="50" WidthRequest="200"/>
+
+                <Button Text="Save" Grid.Column="3" Grid.Row="3" Clicked="SaveButton_Clicked"/>
+
+                <Label Text="Comments"
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+                <Editor x:Name="Comments" Text="" Grid.Column="0" Grid.Row="4"  Grid.ColumnSpan="4" HeightRequest="400" />
+
+                <Label Text="Inventory Items"
+                        Grid.Column="0"
+                        Grid.Row="5"
+                        FontSize="Default"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start" />
+            </Grid>
+
+            <Frame Padding="10,10,10,10">
+                   
+                    <ListView  x:Name="SiteServiceInventoryItemsListView" ItemsSource="{Binding siteServiceInventoryList}"  >
+
+                        <ListView.Header>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25*" />
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Text="Inventory Name"  Grid.Column="0"  VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                <Label Text="Quantity"  Grid.Column="1"  HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                                <Label Text="Image"  Grid.Column="2"  HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                                <Label Text="Delete"  Grid.Column="3"  HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+                        </Grid>
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25*" />
+                                            <ColumnDefinition Width="25*"/>
+                                            <ColumnDefinition Width="25*"/>
+                                            <ColumnDefinition Width="25*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Column="0" Text="{Binding InventoryName}" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                        <Editor x:Name="Quantity" Text="{Binding Quantity, Mode=TwoWay}" Grid.Column="1" PropertyChanged="Quantity_PropertyChanged" HorizontalOptions="Start" />
+                                        <Button Text="Image" Grid.Column="2" HorizontalOptions="Start"  />
+                                        <Button Text="Delete"  Grid.Column="3" Clicked="DeleteButton_Clicked" CommandParameter="{Binding InventoryId}" HorizontalOptions="Start" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

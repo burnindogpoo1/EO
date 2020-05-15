@@ -32,7 +32,7 @@ namespace EOMobile
 
         List<PlantInventoryDTO> plants = new List<PlantInventoryDTO>();
 
-        ObservableCollection<PlantInventoryDTO> list2 = new ObservableCollection<PlantInventoryDTO>();
+        ObservableCollection<PlantInventoryDTO> list3 = new ObservableCollection<PlantInventoryDTO>();
 
         public PlantPage()
         {
@@ -49,6 +49,18 @@ namespace EOMobile
 
             PlantType.ItemsSource = list1;
 
+            List<string> sizes = ((App)App.Current).GetSizeByInventoryType(1);
+
+            ObservableCollection<KeyValuePair<long, string>> list2 = new ObservableCollection<KeyValuePair<long, string>>();
+
+            long index = 1;
+            foreach (string size in sizes)
+            {
+                list2.Add(new KeyValuePair<long, string>(index++, size));
+            }
+
+            PlantSize.ItemsSource = list2;
+
             PlantType.SelectedIndexChanged += PlantType_SelectedIndexChanged;
 
             PlantName.SelectedIndexChanged += PlantName_SelectedIndexChanged;
@@ -57,12 +69,12 @@ namespace EOMobile
 
             plants = ((App)App.Current).GetPlants().PlantInventoryList;
 
-            foreach(PlantInventoryDTO p in plants)
-            {
-                list2.Add(p);
-            }
+            //foreach(PlantInventoryDTO p in plants)
+            //{
+            //    list3.Add(p);
+            //}
 
-            plantListView.ItemsSource = list2;
+            //plantListView.ItemsSource = list3;
         }
 
 
@@ -74,7 +86,7 @@ namespace EOMobile
             {
                 HttpClient client = new HttpClient();
                 //client.BaseAddress = new Uri("http://localhost:9000/");
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+                client.BaseAddress = new Uri(((App)App.Current).LAN_Address);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("plain/text"));
 
                 client.DefaultRequestHeaders.Add("EO-Header", User + " : " + Pwd);
@@ -105,7 +117,7 @@ namespace EOMobile
             try
             {
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://192.168.1.3:9000/");
+                client.BaseAddress = new Uri(((App)App.Current).LAN_Address);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 client.DefaultRequestHeaders.Add("EO-Header", User + " : " + Pwd);
@@ -117,7 +129,7 @@ namespace EOMobile
                     Stream streamData = httpResponse.Content.ReadAsStreamAsync().Result;
                     StreamReader strReader = new StreamReader(streamData);
                     string strData = strReader.ReadToEnd();
-                    strReader.Close();
+                    //strReader.Close();
                     plants = JsonConvert.DeserializeObject<GetPlantResponse>(strData);
                 }
                 else
@@ -135,51 +147,65 @@ namespace EOMobile
 
         private void PlantSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            KeyValuePair<long, string> selectedItem = (KeyValuePair<long, string>)PlantSize.SelectedItem;
 
+            if (!String.IsNullOrEmpty(selectedItem.Value))
+            {
+                long selectedValue = ((KeyValuePair<long, string>)PlantSize.SelectedItem).Key;
+                string selectedPlantSize = ((KeyValuePair<long, string>)PlantSize.SelectedItem).Value;
+
+                ObservableCollection<PlantInventoryDTO> pDTO = new ObservableCollection<PlantInventoryDTO>();
+
+                foreach (PlantInventoryDTO p in plants.Where(a => a.Plant.PlantSize == selectedPlantSize))
+                {
+                    pDTO.Add(p);
+                }
+
+                plantListView.ItemsSource = pDTO;
+            }
         }
-
+        
         private void PlantName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            long selectedValue = ((KeyValuePair<long, string>)PlantType.SelectedItem).Key;
+            PlantSize.SelectedIndex = -1;
 
-            //List<GetPlantResponse> plants = GetPlantSizes(selectedValue);
+            long selectedValue = ((KeyValuePair<long, string>)PlantName.SelectedItem).Key;
+            string selectedPlantName = ((KeyValuePair<long, string>)PlantName.SelectedItem).Value;
 
-            //ObservableCollection<KeyValuePair<long, string>> list3 = new ObservableCollection<KeyValuePair<long, string>>();
+            ObservableCollection<PlantInventoryDTO> pDTO = new ObservableCollection<PlantInventoryDTO>();
 
-            //foreach (GetPlantResponse resp in plants)
-            //{
-            //    list2.Add(new KeyValuePair<long, string>(resp.Plant.PlantId, resp.Plant.PlantName));
-            //}
+            foreach (PlantInventoryDTO p in plants.Where(a => a.Plant.PlantName == selectedPlantName))
+            {
+                pDTO.Add(p);
+            }
 
-            //PlantSize.ItemsSource = list3;
-
-            //ObservableCollection<PlantInventoryDTO> pDTO = new ObservableCollection<PlantInventoryDTO>();
-
-            //foreach (PlantInventoryDTO p in plants)
-            //{
-            //    pDTO.Add(p);
-            //}
-
-            //plantListView.ItemsSource = pDTO;
+            plantListView.ItemsSource = pDTO;
         }
 
         private void PlantType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            PlantSize.SelectedIndex = -1;
+
             long selectedValue = ((KeyValuePair<long, string>)PlantType.SelectedItem).Key;
 
             GetPlantResponse response = GetPlantsByType(selectedValue);
 
-            plants = response.PlantInventoryList;
+            //plants = response.PlantInventoryList;
 
             ObservableCollection<KeyValuePair<long, string>> list2 = new ObservableCollection<KeyValuePair<long, string>>();
 
-            foreach (PlantInventoryDTO resp in plants)
+            ObservableCollection<PlantInventoryDTO> pDTO = new ObservableCollection<PlantInventoryDTO>();
+
+            foreach (PlantInventoryDTO p in plants.Where(a => a.Plant.PlantTypeId == selectedValue))
             {
-                list2.Add(new KeyValuePair<long, string>(resp.Plant.PlantId, resp.Plant.PlantName));
+                list2.Add(new KeyValuePair<long, string>(p.Plant.PlantId, p.Plant.PlantName));
+
+                pDTO.Add(p);
             }
 
             PlantName.ItemsSource = list2;
+
+            plantListView.ItemsSource = pDTO;
         }
     }
 }

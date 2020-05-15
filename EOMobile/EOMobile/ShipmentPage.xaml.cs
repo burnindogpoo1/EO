@@ -17,7 +17,8 @@ namespace EOMobile
         private List<VendorDTO> vendorList;
         List<ShipmentInventoryItemDTO> shipmentInventoryList = new List<ShipmentInventoryItemDTO>();
         private List<InventoryTypeDTO> inventoryTypeList = new List<InventoryTypeDTO>();
-        ShipmentInventoryItemDTO searchedForInventory = new ShipmentInventoryItemDTO();
+        TabbedShipmentPage TabParent = null;
+
         public string User
         {
             get { return ((App)App.Current).User; }
@@ -30,19 +31,58 @@ namespace EOMobile
             set { ((App)App.Current).Pwd = value; }
         }
 
-        public ShipmentPage ()
+        public ShipmentPage (TabbedShipmentPage tabParent)
 		{
-			InitializeComponent ();
+			Initialize(tabParent);
 
-            MessagingCenter.Subscribe<ArrangementFilterPage, WorkOrderInventoryItemDTO>(this, "UseFilter", async (sender, arg) =>
+            
+        }
+
+        public ShipmentPage(TabbedShipmentPage tabParent, long shipmentId)
+        {
+            Initialize(tabParent);
+
+            ShipmentInventoryDTO shipment = ((App)(App.Current)).GetShipment(shipmentId);
+
+            shipmentInventoryList.Clear();
+
+            foreach(ShipmentInventoryMapDTO map in shipment.ShipmentInventoryMap)
             {
-                LoadFilter(arg);
-            });
+                shipmentInventoryList.Add(new ShipmentInventoryItemDTO()
+                {
+                    InventoryId = map.InventoryId,
+                    InventoryName = map.InventoryName,
+                    Quantity = map.Quantity,
+                    ShipmentId = map.ShipmentId,
+                    //Size = map.Size
+                });
+            }
+
+            Vendor.SelectedItem = shipment.Shipment.VendorId;
+            Receiver.Text = shipment.Shipment.Receiver;
+
+            ObservableCollection<ShipmentInventoryItemDTO> list1 = new ObservableCollection<ShipmentInventoryItemDTO>();
+
+            foreach (ShipmentInventoryItemDTO wo in shipmentInventoryList)
+            {
+                list1.Add(wo);
+            }
+
+            ShipmentItemsListView.ItemsSource = list1;
+        }
+
+        private void Initialize(TabbedShipmentPage tabParent)
+        {
+            InitializeComponent();
+
+            TabParent = tabParent;
+
+            Receiver.Text = User;
 
             vendorList = ((App)(App.Current)).GetVendors(new GetPersonRequest());
 
             ObservableCollection<KeyValuePair<long, string>> list1 = new ObservableCollection<KeyValuePair<long, string>>();
-            foreach(VendorDTO v in vendorList)
+            foreach (VendorDTO v in vendorList)
             {
                 list1.Add(new KeyValuePair<long, string>(v.VendorId, v.VendorName));
             }
@@ -50,20 +90,17 @@ namespace EOMobile
             Vendor.ItemsSource = list1;
         }
 
-        public void LoadFilter(WorkOrderInventoryItemDTO arg)
-        {
-            searchedForInventory = new ShipmentInventoryItemDTO(0,arg.InventoryId,arg.InventoryName,arg.ImageId);
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            if (searchedForInventory.InventoryId != 0)
+            ShipmentInventoryItemDTO searchedForShipmentInventory = ((App)App.Current).searchedForShipmentInventory;
+
+            if (searchedForShipmentInventory != null && searchedForShipmentInventory.InventoryId != 0)
             {
-                if (!shipmentInventoryList.Contains(searchedForInventory))
+                if (!shipmentInventoryList.Contains(searchedForShipmentInventory))
                 {
-                    shipmentInventoryList.Add(searchedForInventory);
+                    shipmentInventoryList.Add(searchedForShipmentInventory);
                     ObservableCollection<ShipmentInventoryItemDTO> list1 = new ObservableCollection<ShipmentInventoryItemDTO>();
 
                     foreach (ShipmentInventoryItemDTO so in shipmentInventoryList)
@@ -72,13 +109,62 @@ namespace EOMobile
                     }
 
                     ShipmentItemsListView.ItemsSource = list1;
+
+                    ((App)App.Current).searchedForShipmentInventory = null;
                 }
             }
         }
 
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
         public void OnInventorySearchClicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new ArrangementFilterPage());
+            Navigation.PushModalAsync(new ArrangementFilterPage(this));
+        }
+
+        public void OnShipmentSaveClicked(object sender, EventArgs e)
+        {
+            if (shipmentInventoryList.Count > 0)
+            {
+                AddShipment();
+            }
+        }
+
+        public void AddShipment()
+        {
+            AddShipmentRequest addShipmentRequest = new AddShipmentRequest();
+
+            ShipmentDTO dto = new ShipmentDTO()
+            {
+                VendorId = ((KeyValuePair<long, string>)this.Vendor.SelectedItem).Key,
+                VendorName = ((KeyValuePair<long, string>)this.Vendor.SelectedItem).Value, 
+                Receiver = this.Receiver.Text,
+                ShipmentDate = DateTime.Now,
+                //Comments = this.Comments.Text
+            };
+
+            List<ShipmentInventoryMapDTO> shipmentInventoryMap = new List<ShipmentInventoryMapDTO>();
+
+            foreach (ShipmentInventoryItemDTO woii in shipmentInventoryList)
+            {
+                shipmentInventoryMap.Add(new ShipmentInventoryMapDTO()
+                {
+                    InventoryId = woii.InventoryId,
+                    InventoryName = woii.InventoryName,
+                    Quantity = woii.Quantity
+                });
+            }
+
+            addShipmentRequest.ShipmentDTO = dto;
+            addShipmentRequest.ShipmentInventoryMap = shipmentInventoryMap;
+
+            ((App)App.Current).AddShipment(addShipmentRequest);
+
+            this.Vendor.SelectedIndex = -1;
+            this.shipmentInventoryList.Clear();
+            this.ShipmentItemsListView.ItemsSource = null;
         }
 
         public void OnDeleteShipmentItem(object sender, EventArgs e)

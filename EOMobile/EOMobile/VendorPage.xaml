@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EOMobile.VendorPage">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout>
             <Label Text="Elegant Ordhids Vendors"
                     FontSize="Medium"   
-                    VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="StartAndExpand" />
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25*"/>
@@ -101,7 +102,7 @@
             </Grid>
 
             <Frame Padding="10,10,10,10">
-                <ListView x:Name="VendorListView" ItemsSource="{Binding Orders}" HorizontalOptions="Start">
+                <ListView x:Name="VendorListView" ItemsSource="{Binding Orders}" >
 
                     <ListView.Header>
                         <Grid >
@@ -114,17 +115,17 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Label Text="VendorName"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="VendorPhone"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="VendorEmail"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" />
-                            <Label Text="StreetAddress"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" />
+                            <Label Text="VendorName"  Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            <Label Text="VendorPhone"  Grid.Column="1" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            <Label Text="VendorEmail"  Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            <Label Text="StreetAddress"  Grid.Column="3" Grid.Row="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
                         </Grid>
                     </ListView.Header>
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid  HorizontalOptions="Start" >
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="25*" />
                                         <ColumnDefinition Width="25*"/>
@@ -134,10 +135,10 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <Label Text="{Binding VendorName}"  Grid.Column="0" HorizontalOptions="Start" />
-                                    <Label Text="{Binding VendorPhone}"  Grid.Column="1" HorizontalOptions="Start" />
-                                    <Label Text="{Binding VendorEmail}"  Grid.Column="2" HorizontalOptions="Start" />
-                                    <Label Text="{Binding StreetAddress}"  Grid.Column="3" HorizontalOptions="Start" />
+                                    <Label Text="{Binding VendorName}"  Grid.Column="0" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label Text="{Binding VendorPhone}"  Grid.Column="1" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label Text="{Binding VendorEmail}"  Grid.Column="2" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                    <Label Text="{Binding StreetAddress}"  Grid.Column="3" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -145,5 +146,6 @@
                 </ListView>
             </Frame>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

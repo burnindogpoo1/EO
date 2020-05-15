@@ -31,6 +31,7 @@
             <Button Text="Vendors" Clicked="OnVendorsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="3"/>
             <Button Text="Shipments" Clicked="OnShipmentsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="3"/>
             <Button Text="Reports" Clicked="OnReportsClicked" HeightRequest="100" WidthRequest="300" Grid.Column="0" Grid.Row="4"/>
+            <Button Text="On Site Service" Clicked="OnSiteServiceClicked" HeightRequest="100" WidthRequest="300" Grid.Column="1" Grid.Row="4"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
