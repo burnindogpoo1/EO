@@ -1,12 +1,14 @@
-﻿using EO.LoginController;
+﻿using EO.Login_Controller;
 using EO.ViewModels.ControllerModels;
 using EO.ViewModels.DataModels;
 using LoginServiceLayer.Interface;
 using Microsoft.Owin.Hosting;
+using Newtonsoft.Json;
 using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -21,13 +23,24 @@ namespace EOLoginConsoleApp
     {
         static void Main(string[] args)
         {
-            string baseAddress = "http://localhost:9000/";
+            //string baseAddress = "http://localhost:9000/";
             //string baseAddress = "http://192.168.1.3:9000/";
 
             StartOptions options = new StartOptions();
             options.Urls.Add("http://localhost:9000");
             options.Urls.Add("http://127.0.0.1:9000");
-            options.Urls.Add("http://192.168.1.3:9000");
+            //options.Urls.Add(GetNetworkConfig());
+            options.Urls.Add("http://192.168.0.129:9000");    //Me
+
+            //options.Urls.Add("http://192.168.1.134:9000/");   //Thom
+
+            options.Urls.Add("http://*:9000");
+
+            options.Urls.Add("http://eo.hopto.org:9000");  //No-Ip Vince's account
+
+            //options.Urls.Add("http://192.168.1.1:9000");
+            //options.Urls.Add("http://192.168.1.2:9000");
+            //options.Urls.Add("http://192.168.1.3:9000");
 
 
             // Start OWIN host 
@@ -49,6 +62,40 @@ namespace EOLoginConsoleApp
                 }
             }
         }
+
+        static private string GetNetworkConfig()
+        {
+            string LAN_Address = "http://127.0.0.1:9000";
+
+            ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+
+            ManagementObjectCollection nics = mc.GetInstances();
+
+            List<string> enabledIPs = new List<string>();
+
+            foreach (ManagementObject nic in nics)
+            {
+                if (Convert.ToBoolean(nic["ipEnabled"]) == true)
+                {
+                    string IpAddress = (nic["IPAddress"] as String[])[0];
+
+                    enabledIPs.Add(IpAddress);
+
+                    string IPSubnet = (nic["IPSubnet"] as String[])[0];
+
+                    string DefaultGateWay = (nic["DefaultIPGateway"] as String[])[0];
+                }
+            }
+
+            if (enabledIPs.Count > 1)
+            {
+                LAN_Address = enabledIPs[1];
+
+                LAN_Address = "http://" + LAN_Address + ":9000";
+            }
+
+            return LAN_Address;
+        }
     }
 
     public class HttpMessageHandler : DelegatingHandler
@@ -56,14 +103,16 @@ namespace EOLoginConsoleApp
         protected override Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (!ValidateKey(request))
+            if (!request.RequestUri.AbsoluteUri.Contains("swagger"))
             {
-                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden);
-                var tsc = new TaskCompletionSource<HttpResponseMessage>();
-                tsc.SetResult(resp);
-                return tsc.Task;
+                if (!ValidateKey(request))
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                    var tsc = new TaskCompletionSource<HttpResponseMessage>();
+                    tsc.SetResult(resp);
+                    return tsc.Task;
+                }
             }
-
             Task<HttpResponseMessage> response = base.SendAsync(request, cancellationToken);
 
             //ApiResponse r = response.Result.Content.ReadAsAsync<ApiResponse>().Result;
@@ -125,9 +174,12 @@ namespace EOLoginConsoleApp
             );
 
             config.MessageHandlers.Add(new HttpMessageHandler());
-            SwaggerConfig.Register();
+
+            config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings();
 
             SwaggerConfig.Register(config);
+
+            SwaggerConfig.Register();
 
             appBuilder.UseWebApi(config);
         }

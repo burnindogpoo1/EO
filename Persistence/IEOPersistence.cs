@@ -58,8 +58,10 @@ namespace EO.Persistence
 
         GetFoliageResponse GetFoliage();
 
-        GetArrangementResponse GetArrangements();
-               
+        GetArrangementResponse GetArrangement(long arrangementId);
+
+        List<GetSimpleArrangementResponse> GetArrangements(string arrangementName);
+
         List<ServiceCodeDTO> GetServiceCodes();
 
         ServiceCodeDTO GetServiceCodeById(long serviceCodeId);
@@ -104,21 +106,29 @@ namespace EO.Persistence
 
         long AddArrangement(AddArrangementRequest arrangementRequest);
 
+        long UpdateArrangement(UpdateArrangementRequest arrangementRequest);
+
         List<InventoryTypeDTO> GetInventoryTypes();
 
         GetInventoryResponse GetInventory(Enums.InventoryType inventoryType);
 
-        WorkOrderResponse GetWorkOrder(long workOrderId);
+        WorkOrderInventoryDTO GetWorkOrder(long workOrderId);
 
         List<WorkOrderResponse> GetWorkOrders(DateTime afterDate);
 
+        long CancelWorkOrder(long workOrderId);
+
         long AddWorkOrder(AddWorkOrderRequest workOrderRequest);
+
+        long AddWorkOrderImage(AddWorkOrderImageRequest workOrderImageRequest);
 
         WorkOrderResponse GetWorkOrders(WorkOrderListFilter filter);
 
         long AddPlantImage(byte[] imageBytes);
 
-        long AddArrangementImage(byte[] imageBytes);
+        long AddArrangementImage(AddArrangementImageRequest request);
+
+        bool DeleteArrangement(long arrangementId);
 
         GetVendorResponse GetVendors(GetPersonRequest request);
 
@@ -130,14 +140,19 @@ namespace EO.Persistence
 
         long AddShipment(AddShipmentRequest request);
 
+        ShipmentInventoryDTO GetShipment(long shipmentId);
+
         GetShipmentResponse GetShipments(ShipmentFilter filter);
+
+        long AddWorkOrderPayment(WorkOrderPaymentDTO workOrderPayment);
+
+        WorkOrderPaymentDTO GetWorkOrderPayment(long workOrderId);
 
         long DoesPersonExist(PersonDTO person);
 
         long ImportPerson(ImportPersonRequest request);
 
         GetPersonResponse GetPerson(GetPersonRequest request);
-
         long FoliageExists(FoliageDTO foliageDTO);
         long FoliageNameExists(string foliageName);
         long FoliageTypeExists(string typeName);

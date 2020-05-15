@@ -1,4 +1,6 @@
-﻿using EO.ViewModels.ControllerModels;
+﻿
+using Android.Runtime;
+using EO.ViewModels.ControllerModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,8 @@ using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetPersonResponse : ApiResponse
     {
         public List<PersonAndAddressDTO> PersonAndAddress { get; set; }

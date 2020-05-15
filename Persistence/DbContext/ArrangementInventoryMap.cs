@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Android.Runtime;
+using System;
 using System.Collections.Generic;
 
 namespace EO.DatabaseContext
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
+
     public partial class ArrangementInventoryMap
     {
         public long ArrangementInventoryMapId { get; set; }
@@ -12,6 +16,9 @@ namespace EO.DatabaseContext
         public virtual Arrangement Arrangement { get; set; }
         public virtual Inventory Inventory { get; set; }
     }
+
+    [Serializable]
+    [Preserve(AllMembers = true)]
 
     public partial class ArrangementInventoryInventoryMap
     {

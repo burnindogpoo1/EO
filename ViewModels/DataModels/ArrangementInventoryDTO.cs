@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,27 +8,31 @@ using System.Threading.Tasks;
 
 namespace ViewModels.DataModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
+
     public class ArrangementInventoryDTO
     {
-        public InventoryDTO Inventory { get; set; }
-        public ArrangementDTO Arrangement { get; set; }
-        public List<KeyValuePair<long, string>> InventoryList { get; set; }
-        public long ImageId { get; set; }
-
         public ArrangementInventoryDTO()
         {
-            Inventory = new InventoryDTO();
-            Arrangement = new ArrangementDTO();
-            InventoryList = new List<KeyValuePair<long, string>>();
-            ImageId = 0;
+
+        }
+        public ArrangementInventoryDTO(long arrangementId, long inventoryId, string name, string size, long imageId, int quantity = 1)
+        {
+            ArrangementId = arrangementId;
+            InventoryId = inventoryId;
+            ArrangementInventoryName = name;
+            Size = size;
+            ImageId = imageId;
+            Quantity = quantity;
         }
 
-        public ArrangementInventoryDTO(InventoryDTO inventory, ArrangementDTO arrangement, List<KeyValuePair<long, string>> inventoryList, long imageId)
-        {
-            Inventory = inventory;
-            Arrangement = arrangement;
-            InventoryList = inventoryList;
-            ImageId = imageId;
-        }
+        public long ArrangementId { get; set; }
+        public long InventoryId { get; set; }
+        public long ArrangementInventoryInventoryMapId { get; set; }
+        public string ArrangementInventoryName { get; set; }
+        public int Quantity { get; set; }
+        public string Size { get; set; }
+        public long ImageId { get; set; }
     }
 }

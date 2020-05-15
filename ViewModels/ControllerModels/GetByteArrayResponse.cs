@@ -1,4 +1,6 @@
-﻿using EO.ViewModels.ControllerModels;
+﻿
+using Android.Runtime;
+using EO.ViewModels.ControllerModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetByteArrayResponse : ApiResponse
     {
         public HttpResponseMessage HttpResponse { get; set; }

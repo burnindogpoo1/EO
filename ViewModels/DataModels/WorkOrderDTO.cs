@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace ViewModels.DataModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class WorkOrderDTO
     {
         public long WorkOrderId { get; set; }
@@ -25,5 +28,13 @@ namespace ViewModels.DataModels
         public string Comments { get; set; }
 
         public bool Paid { get; set; }
+
+        public bool IsSiteService { get; set; }
+
+        public bool IsDelivery { get; set; }
+
+        public bool IsCancelled { get; set; }
+
+        public long CustomerId { get; set; }
     }
 }

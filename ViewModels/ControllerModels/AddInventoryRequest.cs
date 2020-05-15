@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -8,6 +10,8 @@ using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class AddPlantRequest
     {
         public AddPlantRequest()
@@ -28,6 +32,8 @@ namespace ViewModels.ControllerModels
         public long ImageId { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class AddFoliageRequest
     {
         public AddFoliageRequest()
@@ -48,6 +54,8 @@ namespace ViewModels.ControllerModels
         public long ImageId { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class AddMaterialRequest
     {
         public AddMaterialRequest()
@@ -68,6 +76,8 @@ namespace ViewModels.ControllerModels
         public long ImageId { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class AddContainerRequest
     {
         public AddContainerRequest()
@@ -88,6 +98,8 @@ namespace ViewModels.ControllerModels
         public long ImageId { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class AddArrangementRequest
     {
         public AddArrangementRequest()
@@ -104,6 +116,26 @@ namespace ViewModels.ControllerModels
         public long ImageId { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
+    public class UpdateArrangementRequest
+    {
+        public UpdateArrangementRequest()
+        {
+            ArrangementItems = new List<ArrangementInventoryDTO>(); 
+        }
+
+        public InventoryDTO Inventory { get; set; }
+
+        public ArrangementDTO Arrangement { get; set; }
+
+        public List<ArrangementInventoryDTO> ArrangementItems { get; set; }
+
+        public long ImageId { get; set; }
+    }
+
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ImportPlantRequest
     {
         public ImportPlantRequest()
@@ -125,6 +157,8 @@ namespace ViewModels.ControllerModels
         public byte[] imageBytes { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ImportFoliageRequest
     {
         public ImportFoliageRequest()
@@ -146,6 +180,8 @@ namespace ViewModels.ControllerModels
         public byte[] imageBytes { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ImportMaterialRequest
     {
         public ImportMaterialRequest()
@@ -167,6 +203,8 @@ namespace ViewModels.ControllerModels
         public byte[] imageBytes { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ImportContainerRequest
     {
         public ImportContainerRequest()
@@ -188,8 +226,18 @@ namespace ViewModels.ControllerModels
         public byte[] imageBytes { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class AddImageRequest
     {
         public byte[] imgBytes { get; set; }
+    }
+
+    [Serializable]
+    [Preserve(AllMembers = true)]
+    public class AddArrangementImageRequest
+    {
+        public long ArrangementId { get; set; }
+        public byte[] Image { get; set; }
     }
 }

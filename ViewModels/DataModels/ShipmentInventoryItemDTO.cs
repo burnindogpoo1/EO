@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace ViewModels.DataModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ShipmentInventoryItemDTO
     {
         public ShipmentInventoryItemDTO()
@@ -14,11 +17,12 @@ namespace ViewModels.DataModels
 
         }
 
-        public ShipmentInventoryItemDTO(long shipmentId, long inventoryId, string inventoryName, long imageId, int quantity = 1)
+        public ShipmentInventoryItemDTO(long shipmentId, long inventoryId, string inventoryName, string size, long imageId, int quantity = 1)
         {
             ShipmentId = shipmentId;
             InventoryId = inventoryId;
             InventoryName = inventoryName;
+            Size = size;
             ImageId = imageId;
             Quantity = quantity;
         }
@@ -32,6 +36,7 @@ namespace ViewModels.DataModels
 
         public long ImageId { get; set; }
 
+        public string Size { get; set; }
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

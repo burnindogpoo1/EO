@@ -1,19 +1,18 @@
-﻿
-using Android.Runtime;
-using EO.ViewModels.ControllerModels;
+﻿using Android.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
     [Serializable]
     [Preserve(AllMembers = true)]
-    public class AddServiceCodeResponse : ApiResponse
-    {
-        public ServiceCodeDTO ServiceCode { get; set; }
+    public class PaymentRequest
+    {       
+        public byte[] payload { get; set; }
+        public int test { get; set; }
+        public string test2 { get; set; }
     }
 }

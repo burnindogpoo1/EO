@@ -16,7 +16,9 @@ namespace InventoryServiceLayer.Interface
 
         GetPlantResponse GetPlant(long plantId);
                
-        GetArrangementResponse GetArrangements();
+        GetArrangementResponse GetArrangement(long arrangementId);
+
+        List<GetSimpleArrangementResponse> GetArrangements(string arrangementName);
 
         GetPlantTypeResponse GetPlantTypes();
 
@@ -100,9 +102,13 @@ namespace InventoryServiceLayer.Interface
 
         long AddArrangement(AddArrangementRequest arrangementRequest);
 
+        long UpdateArrangement(UpdateArrangementRequest arrangementRequest);
+
         long AddPlantImage(byte[] imageBytes);
 
-        long AddArrangementImage(byte[] imageBytes);
+        long AddArrangementImage(AddArrangementImageRequest request);
+
+        bool DeleteArrangement(long arrangementId);
 
         GetVendorResponse GetVendors(GetPersonRequest request);
 
@@ -114,13 +120,23 @@ namespace InventoryServiceLayer.Interface
 
         long AddShipment(AddShipmentRequest request);
 
+        ShipmentInventoryDTO GetShipment(long shipmentId);
+
         GetShipmentResponse GetShipments(ShipmentFilter filter);
 
-        WorkOrderResponse GetWorkOrder(long workOrderId);
+        long AddWorkOrderPayment(WorkOrderPaymentDTO workOrderPayment);
+
+        WorkOrderPaymentDTO GetWorkOrderPayment(long workOrderId);
+
+        WorkOrderInventoryDTO GetWorkOrder(long workOrderId);
 
         List<WorkOrderResponse> GetWorkOrders(DateTime afterDate);
 
+        long CancelWorkOrder(long workOrderId);
+        
         long AddWorkOrder(AddWorkOrderRequest workOrderRequest);
+
+        long AddWorkOrderImage(AddWorkOrderImageRequest workOrderImageRequest);
 
         WorkOrderResponse GetWorkOrders(WorkOrderListFilter filter);
 

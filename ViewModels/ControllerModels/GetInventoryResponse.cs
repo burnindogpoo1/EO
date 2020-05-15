@@ -1,4 +1,7 @@
-﻿using EO.ViewModels.ControllerModels;
+﻿
+using Android.Runtime;
+using EO.ViewModels.ControllerModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +11,8 @@ using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetInventoryResponse : ApiResponse
     {
         public List<InventoryDTO> InventoryList { get; set; }
@@ -21,6 +26,8 @@ namespace ViewModels.ControllerModels
         }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetPlantResponse : ApiResponse
     {
         public List<PlantInventoryDTO> PlantInventoryList { get; set; }
@@ -35,6 +42,8 @@ namespace ViewModels.ControllerModels
         }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetMaterialResponse : ApiResponse
     {
         public List<MaterialInventoryDTO> MaterialInventoryList { get; set; }
@@ -49,6 +58,8 @@ namespace ViewModels.ControllerModels
         }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetFoliageResponse : ApiResponse
     {
         public List<FoliageInventoryDTO> FoliageInventoryList { get; set; }
@@ -62,6 +73,9 @@ namespace ViewModels.ControllerModels
             FoliageInventoryList = foliageInventoryList;
         }
     }
+
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetContainerResponse : ApiResponse
     {
         public List<ContainerInventoryDTO> ContainerInventoryList { get; set; }
@@ -77,17 +91,38 @@ namespace ViewModels.ControllerModels
         }
     }
 
-    public class GetArrangementResponse : ApiResponse
+    [Serializable]
+    [Preserve(AllMembers = true)]
+    public class GetSimpleArrangementResponse // : ApiResponse
     {
+        public ArrangementDTO Arrangement { get; set; }
+
+        public InventoryDTO Inventory { get; set; }
+    }
+
+    [Serializable]
+    [Preserve(AllMembers = true)]
+    public class GetArrangementResponse //: ApiResponse
+    {
+        public ArrangementDTO Arrangement { get; set; }
         public List<ArrangementInventoryDTO> ArrangementList { get; set; }
+
+        public List<ImageResponse> Images { get; set; }
         public GetArrangementResponse()
         {
-            ArrangementList = new List<ArrangementInventoryDTO>();
-        }
+            Arrangement = new ArrangementDTO();
 
-        public GetArrangementResponse(List<ArrangementInventoryDTO> arrangementList)
-        {
-            ArrangementList = arrangementList;
+            ArrangementList = new List<ArrangementInventoryDTO>();
+
+            Images = new List<ImageResponse>();
         }
+    }
+
+    [Serializable]
+    [Preserve(AllMembers = true)]
+    public class ImageResponse
+    {
+        public long ImageId { get; set; }
+        public byte[] Image { get; set; }
     }
 }

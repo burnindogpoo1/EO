@@ -49,6 +49,8 @@ namespace EO.DatabaseContext
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<VendorAddressMap> VendorAddressMap { get; set; }
         public virtual DbSet<WorkOrder> WorkOrder { get; set; }
+        public virtual DbSet<WorkOrderPayment> WorkOrderPayment { get; set; }
+        public virtual DbSet<WorkOrderImageMap> WorkOrderImageMap { get; set; }
         public virtual DbSet<WorkOrderInventoryMap> WorkOrderInventoryMap { get; set; }
         public virtual DbSet<Shipment> Shipment { get; set; }
         public virtual DbSet<ShipmentInventoryMap> ShipmentInventoryMap { get; set; }
@@ -1130,11 +1132,11 @@ namespace EO.DatabaseContext
 
                 entity.Property(e => e.Cost)
                     .HasColumnName("cost")
-                    .HasColumnType("decimal(10,0)");
+                    .HasColumnType("decimal(15,2)");
 
                 entity.Property(e => e.Price)
                     .HasColumnName("price")
-                    .HasColumnType("decimal(10,0)");
+                    .HasColumnType("decimal(15,2)");
 
                 entity.Property(e => e.ServiceCode1)
                     .HasColumnName("service_code")
@@ -1273,6 +1275,21 @@ namespace EO.DatabaseContext
                     .HasColumnType("bit(1)")
                     .HasDefaultValueSql("b'0'");
 
+                entity.Property(e => e.IsSiteService)
+                    .HasColumnName("is_site_service")
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'0'");
+
+                entity.Property(e => e.IsDelivery)
+                   .HasColumnName("is_delivery")
+                   .HasColumnType("bit(1)")
+                   .HasDefaultValueSql("b'0'");
+
+                entity.Property(e => e.IsCancelled)
+                   .HasColumnName("is_cancelled")
+                   .HasColumnType("bit(1)")
+                   .HasDefaultValueSql("b'0'");
+
                 entity.Property(e => e.PersonInitiator)
                     .HasColumnName("person_initiator")
                     .HasMaxLength(45)
@@ -1286,6 +1303,80 @@ namespace EO.DatabaseContext
                 entity.Property(e => e.UpdateDate)
                     .HasColumnName("update_date")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CustomerId)
+                   .HasColumnName("customer_id")
+                   .HasColumnType("bigint(20) unsigned");
+            });
+
+            modelBuilder.Entity<WorkOrderPayment>(entity =>
+            {
+                entity.ToTable("work_order_payment", "eotest");
+
+                entity.Property(e => e.WorkOrderPaymentId)
+                    .HasColumnName("work_order_payment_id")
+                    .HasColumnType("bigint(20) unsigned");
+
+                entity.Property(e => e.WorkOrderId)
+                    .HasColumnName("work_order_id")
+                    .HasColumnType("bigint(20) unsigned");
+
+                entity.Property(e => e.WorkOrderPaymentType)
+                    .HasColumnName("work_order_payment_type")
+                    .HasColumnType("int unsigned");
+
+                entity.Property(e => e.WorkOrderPaymentAmount)
+                    .HasColumnName("work_order_payment_amount")
+                    .HasColumnType("decimal(15,2)");
+
+                entity.Property(e => e.WorkOrderPaymentTax)
+                    .HasColumnName("work_order_payment_tax")
+                    .HasColumnType("decimal(15,2)");
+
+                entity.Property(e => e.WorkOrderPaymentCreditCardConfirmation)
+                    .HasColumnName("work_order_payment_cc_confirm")
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
+                //entity.HasOne(e => e.WorkOrderId)
+                //   .WithOne(p => p.WorkOrder)
+                //   .HasForeignKey(d => d.WorkOrderId)
+                //   .HasConstraintName("WorkOrderPayment");
+            });
+
+            modelBuilder.Entity<WorkOrderImageMap>(entity =>
+            {
+                entity.ToTable("work_order_image_map", "eotest");
+
+                entity.HasIndex(e => e.ImageId)
+                    .HasName("fk_workorder_image_idx");
+
+                entity.HasIndex(e => e.WorkOrderId)
+                    .HasName("fk_workorder_workorder_idx");
+
+                entity.Property(e => e.WorkOrderImageMapId)
+                    .HasColumnName("work_order_image_map_id")
+                    .HasColumnType("bigint(20) unsigned");
+
+                entity.Property(e => e.ImageId)
+                    .HasColumnName("image_id")
+                    .HasColumnType("bigint(20) unsigned");
+
+                entity.Property(e => e.WorkOrderId)
+                    .HasColumnName("work_order_id")
+                    .HasColumnType("bigint(20) unsigned");
+
+                //entity.HasOne(d => d.Image)
+                //    .WithMany(p => p.WorkOrderImageMap)
+                //    .HasForeignKey(d => d.ImageId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_workorder_image");
+
+                //entity.HasOne(d => d.WorkOrder)
+                //    .WithMany(p => p.WorkOrderImageMap)
+                //    .HasForeignKey(d => d.WorkOrderId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_workorder_workorder");
             });
 
             modelBuilder.Entity<WorkOrderInventoryMap>(entity =>

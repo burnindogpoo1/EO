@@ -37,9 +37,14 @@ namespace InventoryServiceLayer.Implementation
             return persistence.GetPlant(plantId);
         }
 
-        public GetArrangementResponse GetArrangements()
+        public GetArrangementResponse GetArrangement(long arrangementId)
         {
-            return persistence.GetArrangements();
+            return persistence.GetArrangement(arrangementId);
+        }
+
+        public List<GetSimpleArrangementResponse> GetArrangements(string arrangementName)
+        {
+            return persistence.GetArrangements(arrangementName);
         }
 
         public GetPlantTypeResponse GetPlantTypes()
@@ -51,7 +56,7 @@ namespace InventoryServiceLayer.Implementation
         {
             return persistence.GetPlantsByType(plantTypeId);
         }
-                
+
         public GetPlantNameResponse GetPlantNamesByType(long plantTypeId)
         {
             return persistence.GetPlantNamesByType(plantTypeId);
@@ -236,14 +241,24 @@ namespace InventoryServiceLayer.Implementation
             return persistence.AddArrangement(arrangementrequest);
         }
 
+        public long UpdateArrangement(UpdateArrangementRequest arrangementrequest)
+        {
+            return persistence.UpdateArrangement(arrangementrequest);
+        }
+
         public long AddPlantImage(byte[] imageBytes)
         {
             return persistence.AddPlantImage(imageBytes);
         }
 
-        public long AddArrangementImage(byte[] imageBytes)
+        public long AddArrangementImage(AddArrangementImageRequest request)
         {
-            return persistence.AddArrangementImage(imageBytes);
+            return persistence.AddArrangementImage(request);
+        }
+
+        public bool DeleteArrangement(long arrangementId)
+        {
+            return persistence.DeleteArrangement(arrangementId);
         }
 
         public GetVendorResponse GetVendors(GetPersonRequest request)
@@ -271,12 +286,26 @@ namespace InventoryServiceLayer.Implementation
             return persistence.AddShipment(request);
         }
 
+        public ShipmentInventoryDTO GetShipment(long shipmentId)
+        {
+            return persistence.GetShipment(shipmentId);
+        }
         public GetShipmentResponse GetShipments(ShipmentFilter filter)
         {
             return persistence.GetShipments(filter);
         }
 
-        public WorkOrderResponse GetWorkOrder(long workOrderId)
+        public long AddWorkOrderPayment(WorkOrderPaymentDTO workOrderPayment)
+        {
+            return persistence.AddWorkOrderPayment(workOrderPayment);
+        }
+
+        public WorkOrderPaymentDTO GetWorkOrderPayment(long workOrderId)
+        {
+            return persistence.GetWorkOrderPayment(workOrderId);
+        }
+
+        public WorkOrderInventoryDTO GetWorkOrder(long workOrderId)
         {
             return persistence.GetWorkOrder(workOrderId);
         }
@@ -286,9 +315,19 @@ namespace InventoryServiceLayer.Implementation
             return persistence.GetWorkOrders(afterDate);
         }
 
+        public long CancelWorkOrder(long workOrderId)
+        {
+            return persistence.CancelWorkOrder(workOrderId);
+        }
+
         public long AddWorkOrder(AddWorkOrderRequest workOrderRequest)
         {
             return persistence.AddWorkOrder(workOrderRequest);
+        }
+
+        public long AddWorkOrderImage(AddWorkOrderImageRequest workOrderImageRequest)
+        {
+            return persistence.AddWorkOrderImage(workOrderImageRequest);
         }
 
         public WorkOrderResponse GetWorkOrders(WorkOrderListFilter filter)

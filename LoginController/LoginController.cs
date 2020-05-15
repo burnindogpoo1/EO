@@ -6,6 +6,9 @@ using InventoryServiceLayer.Interface;
 using LoginServiceLayer.Implementation;
 using LoginServiceLayer.Interface;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using SharedData;
+using Stripe;
 //using SharedData.ListFilters;
 using System;
 using System.Collections.Generic;
@@ -18,7 +21,7 @@ using ViewModels.ControllerModels;
 using ViewModels.DataModels;
 using static SharedData.Enums;
 
-namespace EO.LoginController
+namespace EO.Login_Controller
 {
     public class LoginController : ApiController
     {
@@ -31,6 +34,130 @@ namespace EO.LoginController
             
             loginManager = new LoginManager();
             inventoryManager = new InventoryManager();
+        }
+
+        private string Fix(string s)
+        {
+            if (!(s.StartsWith("{") && s.EndsWith("}")))
+            {
+                int index = s.LastIndexOf("}");
+                s = s.Substring(0, index + 1);
+                index = s.IndexOf("cardNumber");
+                s = s.Substring(index - 1, s.Length - index + 1);
+                s = "{" + s;
+            }
+            return s;
+        }
+
+        [HttpPost]
+        public PaymentResponse MakeStripePayment([FromBody]PaymentRequest request)
+        {
+            PaymentResponse response = new PaymentResponse();
+
+            try
+            {
+                //byte[] hash1 = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F };
+                //byte[] hash2 = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F };
+
+                byte[] hash1 = Encryption.GetBytes(Encryption.StatsOne(request.test));
+                byte[] hash2 = Encryption.GetBytes(Encryption.StatsOne(request.test));
+
+                string cc = Encryption.DecryptStringFromBytes(request.payload, hash1, hash2);
+
+                //If I use the harcoded hash1 and hash2 values - no deserialization problems
+                //If is use custom rindjael key and IV values, the json object needs to be "fixed"
+                cc = Fix(cc);
+
+                CardInput ci = JsonConvert.DeserializeObject<CardInput>(cc);
+
+                DateTime dt = Convert.ToDateTime(ci.expirationDate);
+
+                StripeConfiguration.ApiKey = "pk_test_qEqBdPz6WTh3CNdcc9bgFXpz00haS1e8hC";
+
+                var options = new TokenCreateOptions
+                {
+                    Card = new CreditCardOptions
+                    {
+                        Number = ci.cardNumber,
+                        ExpYear = dt.Year,
+                        ExpMonth = dt.Month,
+                        Cvc = ci.cvc,
+                        Currency = "usd"
+                    }
+                };
+
+                var tokenService = new TokenService();
+
+                Token stripeToken = tokenService.CreateAsync(options).Result;
+
+                string checkToken = stripeToken.Id;
+
+                if(!String.IsNullOrEmpty(checkToken))
+                {
+                    decimal salePrice = 50;
+                    string buyer = "test buyer";
+
+                    Charge c = new Charge();
+
+                    var chargeOptions = new ChargeCreateOptions
+                    {
+                        Amount = Convert.ToInt64(salePrice),
+                        Currency = "usd",
+                        Description = "Charge for " + buyer + " on " + Convert.ToString(DateTime.Now),
+                        Source = checkToken
+                    };
+
+                    //StripeConfiguration.ApiKey = "pk_test_qEqBdPz6WTh3CNdcc9bgFXpz00haS1e8hC";
+
+                    StripeConfiguration.ApiKey = "sk_test_6vJyMV6NxHArGV6kI2EL6R7V00kzjXJ72u";
+
+                    var service1 = new ChargeService();
+
+                    c = service1.Create(chargeOptions);
+
+                    response.success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                if(ex is StripeException)
+                {
+                    string stripeErrorMsg = HandleStripeException(ex as StripeException);
+                }
+            }
+
+            return response;
+        }
+
+        private string HandleStripeException(StripeException ex)
+        {
+            string errorMsg = String.Empty;
+
+            Dictionary<String, String> stripeErrorDictionary = new Dictionary<String, String>() {
+                { "invalid_number", "The card number is not a valid credit card number." },
+                { "invalid_expiry_month", "The card's expiration month is invalid." },
+                { "invalid_expiry_year", "The card's expiration year is invalid." },
+                { "invalid_cvc", "The card's security code is invalid." },
+                { "invalid_swipe_data", "The card's swipe data is invalid." },
+                { "incorrect_number", "The card number is incorrect." },
+                { "expired_card", "The card has expired." },
+                { "incorrect_cvc", "The card's security code is incorrect." },
+                { "incorrect_zip", "The card's zip code failed validation." },
+                { "card_declined", "The card was declined." },
+                { "missing", "There is no card on a customer that is being charged." },
+                { "processing_error", "An error occurred while processing the card." },
+            };
+
+            if (stripeErrorDictionary.ContainsKey(ex.StripeError.Code))
+            {
+                errorMsg = stripeErrorDictionary[ex.StripeError.Code];
+            }
+            else
+            {
+                errorMsg = "An unknown error occurred.";
+            }
+
+            return errorMsg;
         }
 
         /// <summary>
@@ -86,9 +213,11 @@ namespace EO.LoginController
         }
 
         [HttpPost]
-        public long AddPlantImage(AddImageRequest request)
+        public ApiResponse AddPlantImage(AddImageRequest request)
         {
-            return inventoryManager.AddPlantImage(request.imgBytes);
+            ApiResponse response = new ApiResponse();
+            response.Id = inventoryManager.AddPlantImage(request.imgBytes);
+            return response;
         }
 
         [HttpPost]
@@ -123,7 +252,7 @@ namespace EO.LoginController
         }
 
         [HttpPost]
-        public HttpResponseMessage UploadArrangementImage()
+        public HttpResponseMessage UploadArrangementImage(long arrangementId)
         {
             long image_id = 0;
 
@@ -144,7 +273,10 @@ namespace EO.LoginController
                 var contentType = stream.Headers.ContentType.MediaType;
 
                 //save bytes to db
-                image_id = inventoryManager.AddArrangementImage(fileBytes);
+                AddArrangementImageRequest request = new AddArrangementImageRequest();
+                request.ArrangementId = arrangementId;
+                request.Image = fileBytes;
+                image_id = inventoryManager.AddArrangementImage(request);
             }
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -222,8 +354,8 @@ namespace EO.LoginController
             }
             else
             {
-                serviceCodeId = inventoryManager.AddServiceCode(serviceCodeDTO);
-                if ( serviceCodeId == 0)
+                response.Id = inventoryManager.AddServiceCode(serviceCodeDTO);
+                if ( response.Id == 0)
                 {
                     response.AddMessage("DbError", new List<string>() { "There was an error saving this service code." });
                 }
@@ -379,7 +511,7 @@ namespace EO.LoginController
         {
             ApiResponse response = new ApiResponse();
 
-            inventoryManager.AddPlantName(request);
+            response.Id = inventoryManager.AddPlantName(request);
 
             return response;
         }
@@ -391,7 +523,7 @@ namespace EO.LoginController
         {
             ApiResponse response = new ApiResponse();
 
-            inventoryManager.AddPlantType(request);
+            response.Id = inventoryManager.AddPlantType(request);
 
             return response;
         }
@@ -434,9 +566,9 @@ namespace EO.LoginController
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetPlantResponse AddPlant(AddPlantRequest request)
+        public ApiResponse AddPlant(AddPlantRequest request)
         {
-            GetPlantResponse response = new GetPlantResponse();
+            ApiResponse response = new ApiResponse();
 
             if(inventoryManager.InventoryNameIsNotUnique(request.Inventory.InventoryName))
             {
@@ -448,15 +580,11 @@ namespace EO.LoginController
             }
             else
             {
-                long plantId = inventoryManager.AddPlant(request);
+                response.Id = inventoryManager.AddPlant(request);
 
-                if (plantId == 0)
+                if (response.Id == 0)
                 {
                     response.AddMessage("DbError", new List<string>() { "There was an error saving this plant." });
-                }
-                else
-                {
-                    response = inventoryManager.GetPlant(plantId);
                 }
             }
 
@@ -471,9 +599,9 @@ namespace EO.LoginController
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetContainerResponse AddContainer(AddContainerRequest request)
+        public ApiResponse AddContainer(AddContainerRequest request)
         {
-            GetContainerResponse response = new GetContainerResponse();
+            ApiResponse response = new ApiResponse();
 
             if (inventoryManager.InventoryNameIsNotUnique(request.Inventory.InventoryName))
             {
@@ -485,14 +613,10 @@ namespace EO.LoginController
             }
             else
             {
-                long containerId = inventoryManager.AddContainer(request);
-                if (containerId == 0)
+                response.Id = inventoryManager.AddContainer(request);
+                if (response.Id == 0)
                 {
                     response.AddMessage("DbError", new List<string>() { "There was an error saving this container." });
-                }
-                else
-                {
-                    response = inventoryManager.GetContainer(containerId);
                 }
             }
 
@@ -524,15 +648,45 @@ namespace EO.LoginController
                 {
                     response.AddMessage("DbError", new List<string>() { "There was an error saving this arrangement." });
                 }
+                else
+                {
+                    response.Id = arrangement_id;
+                }
             }
 
             return response;
         }
 
-        [HttpGet]
-        public GetArrangementResponse GetArrangements()
+        [HttpPost]
+        public long AddArrangementImage(AddArrangementImageRequest arrangementImageRequest)
         {
-            return inventoryManager.GetArrangements();
+            return inventoryManager.AddArrangementImage(arrangementImageRequest);
+        }
+
+        [HttpPost]
+        public ApiResponse UpdateArrangement(UpdateArrangementRequest request)
+        {
+            ApiResponse response = new ApiResponse();
+            response.Id =  inventoryManager.UpdateArrangement(request);
+            return response;
+        }
+
+        [HttpGet]
+        public GetArrangementResponse GetArrangement(long arrangementId)
+        {
+            return inventoryManager.GetArrangement(arrangementId);
+        }
+
+        [HttpGet]
+        public List<GetSimpleArrangementResponse> GetArrangements(string arrangementName)
+        {
+            return inventoryManager.GetArrangements(arrangementName);
+        }
+
+        [HttpPost]
+        public bool DeleteArrangement([FromBody]long arrangementId)
+        {
+            return inventoryManager.DeleteArrangement(arrangementId);
         }
 
         [HttpPost]
@@ -554,26 +708,21 @@ namespace EO.LoginController
         }
 
         [HttpPost]
-        public GetCustomerResponse AddCustomer(AddCustomerRequest request)
+        public ApiResponse AddCustomer(AddCustomerRequest request)
         {
-            GetCustomerResponse response = new GetCustomerResponse();
+            ApiResponse response = new ApiResponse();
 
-            long newId = inventoryManager.AddCustomer(request);
+            response.Id = inventoryManager.AddCustomer(request);
                         
             return response;
         }
 
         [HttpPost]
-        public GetVendorResponse AddVendor(AddVendorRequest request)
+        public ApiResponse AddVendor(AddVendorRequest request)
         {
-            GetVendorResponse response = new GetVendorResponse();
+            ApiResponse response = new ApiResponse();
 
-            long newId = inventoryManager.AddVendor(request);
-
-            if(newId > 0)
-            {
-                response = GetVendorById(newId);
-            }
+            response.Id = inventoryManager.AddVendor(request);
 
             return response;
         }
@@ -583,9 +732,15 @@ namespace EO.LoginController
         {
             ApiResponse response = new ApiResponse();
 
-            long newId = inventoryManager.AddShipment(request);
+            response.Id = inventoryManager.AddShipment(request);
 
             return response;
+        }
+
+        [HttpGet]
+        public ShipmentInventoryDTO GetShipment([FromUri]long shipmentId)
+        {
+            return inventoryManager.GetShipment(shipmentId);
         }
 
         [HttpPost]
@@ -594,8 +749,22 @@ namespace EO.LoginController
             return inventoryManager.GetShipments(filter);
         }
 
+        [HttpPost]
+        public ApiResponse AddWorkOrderPayment(WorkOrderPaymentDTO workOrderPayment)
+        {
+            ApiResponse response = new ApiResponse();
+            response.Id = inventoryManager.AddWorkOrderPayment(workOrderPayment);
+            return response;
+        }
+
         [HttpGet]
-        public WorkOrderResponse GetWorkOrder([FromUri]long workOrderId)
+        public WorkOrderPaymentDTO GetWorkOrderPayment([FromUri]long workOrderId)
+        {
+            return inventoryManager.GetWorkOrderPayment(workOrderId);
+        }
+
+        [HttpGet]
+        public WorkOrderInventoryDTO GetWorkOrder([FromUri]long workOrderId)
         {
             return inventoryManager.GetWorkOrder(workOrderId);
         }
@@ -606,11 +775,26 @@ namespace EO.LoginController
             return inventoryManager.GetWorkOrders(afterDate);
         }
 
-        [HttpPost]
-        public long AddWorkOrder(AddWorkOrderRequest workOrderRequest)
+        [HttpGet]
+        public long CancelWorkOrder(long workOrderId)
         {
-            return inventoryManager.AddWorkOrder(workOrderRequest);
+            return inventoryManager.CancelWorkOrder(workOrderId);
         }
+
+        [HttpPost]
+        public ApiResponse AddWorkOrder(AddWorkOrderRequest workOrderRequest)
+        {
+            ApiResponse response = new ApiResponse();
+            response.Id =  inventoryManager.AddWorkOrder(workOrderRequest);
+            return response;
+        }
+
+        [HttpPost]
+        public long AddWorkOrderImage(AddWorkOrderImageRequest workOrderImageRequest)
+        {
+            return inventoryManager.AddWorkOrderImage(workOrderImageRequest);
+        }
+
 
         [HttpPost]
         public WorkOrderResponse GetWorkOrders(WorkOrderListFilter filter)

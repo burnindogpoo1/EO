@@ -1,4 +1,6 @@
-﻿using EO.ViewModels.ControllerModels;
+﻿
+using Android.Runtime;
+using EO.ViewModels.ControllerModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,8 @@ using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetPlantNameResponse : ApiResponse
     {
         public List<PlantNameDTO> PlantNames { get; set; }
@@ -22,7 +26,8 @@ namespace ViewModels.ControllerModels
             PlantNames = plantNames;
         }
     }
-
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetMaterialNameResponse : ApiResponse
     {
         public List<MaterialNameDTO> MaterialNames { get; set; }
@@ -38,6 +43,8 @@ namespace ViewModels.ControllerModels
         }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class GetFoliageNameResponse : ApiResponse
     {
         public List<FoliageNameDTO> FoliageNames { get; set; }

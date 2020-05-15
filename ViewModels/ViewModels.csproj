@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.props" Condition="Exists('..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v6.0\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\EOMobile\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -41,6 +51,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerModels\AddCustomerRequest.cs" />
@@ -70,6 +81,8 @@
     <Compile Include="ControllerModels\ListFilters.cs" />
     <Compile Include="ControllerModels\LoginRequest.cs" />
     <Compile Include="ControllerModels\LoginResponse.cs" />
+    <Compile Include="ControllerModels\PaymentRequest.cs" />
+    <Compile Include="ControllerModels\PaymentResponse.cs" />
     <Compile Include="ControllerModels\WorkOrderRequest.cs" />
     <Compile Include="ControllerModels\WorkOrderResponse.cs" />
     <Compile Include="DataModels\AddressDTO.cs" />
@@ -77,9 +90,11 @@
     <Compile Include="DataModels\ArrangementInventoryDTO.cs" />
     <Compile Include="DataModels\ArrangementInventoryFilteredItem.cs" />
     <Compile Include="DataModels\ArrangementInventoryItemDTO.cs" />
+    <Compile Include="DataModels\CardInput.cs" />
     <Compile Include="DataModels\ContainerDTO.cs" />
     <Compile Include="DataModels\ContainerInventoryDTO.cs" />
     <Compile Include="DataModels\ContainerNameDTO.cs" />
+    <Compile Include="DataModels\EOImgData.cs" />
     <Compile Include="DataModels\FoliageDTO.cs" />
     <Compile Include="DataModels\FoliageInventoryDTO.cs" />
     <Compile Include="DataModels\InventoryDTO.cs" />
@@ -104,7 +119,20 @@
     <Compile Include="DataModels\WorkOrderInventoryDTO.cs" />
     <Compile Include="DataModels\WorkOrderInventoryItemDTO.cs" />
     <Compile Include="DataModels\WorkOrderInventoryMapDTO.cs" />
+    <Compile Include="DataModels\WorkOrderPaymentDTO.cs" />
+    <Compile Include="PreserveAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.props'))" />
+    <Error Condition="!Exists('..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.targets" Condition="Exists('..\..\..\..\EOMobile\packages\Xamarin.Forms.4.3.0.991211\build\Xamarin.Forms.targets')" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace ViewModels.DataModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ServiceCodeDTO
     {
         public long ServiceCodeId { get; set; }

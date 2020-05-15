@@ -4,6 +4,11 @@
         <name>ViewModels</name>
     </assembly>
     <members>
+        <member name="T:ViewModels.ControllerModels.AddWorkOrderImageRequest">
+            <summary>
+            Save the work order first - then save any images
+            </summary>
+        </member>
         <member name="P:ViewModels.DataModels.FoliageDTO.FoliageId">
             <summary>
             Primary key
@@ -80,6 +85,7 @@
             <summary>
             A Plant
             </summary>
+            
         </member>
         <member name="P:ViewModels.DataModels.PlantDTO.PlantId">
             <summary>
@@ -106,6 +112,7 @@
             <summary>
             Base object for Response objects
             </summary>
+            
         </member>
         <member name="P:EO.ViewModels.ControllerModels.ApiResponse.Success">
             <summary>
@@ -121,6 +128,7 @@
             <summary>
             Login with username and password
             </summary>
+            
         </member>
         <member name="P:EO.ViewModels.ControllerModels.LoginRequest.Login">
             <summary>
@@ -131,11 +139,13 @@
             <summary>
             Response to login with username and password
             </summary>
+            
         </member>
         <member name="T:EO.ViewModels.DataModels.LoginDTO">
             <summary>
             Login object
             </summary>
+            
         </member>
         <member name="P:EO.ViewModels.DataModels.LoginDTO.UserId">
             <summary>

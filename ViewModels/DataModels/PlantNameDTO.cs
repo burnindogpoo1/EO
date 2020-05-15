@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace ViewModels.DataModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class PlantNameDTO
     {
         public long PlantNameId { get; set; }
@@ -14,7 +18,8 @@ namespace ViewModels.DataModels
 
         public string PlantName { get; set; }
     }
-
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class FoliageNameDTO
     {
         public long FoliageNameId { get; set; }
@@ -24,6 +29,8 @@ namespace ViewModels.DataModels
         public string FoliageName { get; set; }
     }
 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class MaterialNameDTO
     {
         public long MaterialNameId { get; set; }

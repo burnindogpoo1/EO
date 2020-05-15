@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +11,18 @@ namespace EO.ViewModels.ControllerModels
     /// <summary>
     /// Base object for Response objects
     /// </summary>
+    /// 
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ApiResponse
     {
         public ApiResponse()
         {
             Messages = new Dictionary<string, List<string>>();
+            Id = 0;
         }
+
+        public long Id { get; set; }
 
         /// <summary>
         /// Success

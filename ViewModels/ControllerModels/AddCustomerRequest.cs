@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Android.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +9,8 @@ using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers=true)]
     public class AddCustomerRequest
     {
         public PersonAndAddressDTO Customer { get; set; }

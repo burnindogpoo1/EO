@@ -1,7 +1,12 @@
-﻿using ViewModels.DataModels;
+﻿
+using Android.Runtime;
+using System;
+using ViewModels.DataModels;
 
 namespace ViewModels.ControllerModels
 {
+    [Serializable]
+    [Preserve(AllMembers = true)]
     public class ImportPersonRequest
     {
         public ImportPersonRequest()

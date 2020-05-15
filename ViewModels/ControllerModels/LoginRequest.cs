@@ -1,5 +1,7 @@
-﻿using EO.ViewModels.DataModels;
+﻿
+using EO.ViewModels.DataModels;
 using System;
+using Android.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,9 @@ namespace EO.ViewModels.ControllerModels
     /// <summary>
     /// Login with username and password
     /// </summary>
+    /// 
+    [Serializable]
+    [Preserve(AllMembers=true)]
     public class LoginRequest
     {
         public LoginRequest()

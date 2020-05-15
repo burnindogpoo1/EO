@@ -18,7 +18,7 @@ namespace EOLoginConsoleApp
         {
             config.EnableSwagger(c =>
             {
-                c.SingleApiVersion("v1", "Elegant Orchids Login API");
+                c.SingleApiVersion("v1", "EOLoginConsoleApp");
             })
             .EnableSwaggerUi(c =>
             {
@@ -117,6 +117,7 @@ namespace EOLoginConsoleApp
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
+
                         c.IncludeXmlComments(GetXmlCommentsPathControllers());
 
                         c.IncludeXmlComments(GetXmlCommentsPathViewModels());
@@ -236,6 +237,8 @@ namespace EOLoginConsoleApp
                         // it for all operations.
                         //
                         c.SupportedSubmitMethods("GET", "POST","HEAD");
+
+                        c.DisableValidator();
 
                         // Use the CustomAsset option to provide your own version of assets used in the swagger-ui.
                         // It's typically used to instruct Swashbuckle to return your version instead of the default

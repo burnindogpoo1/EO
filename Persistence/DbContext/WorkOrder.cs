@@ -18,8 +18,14 @@ namespace EO.DatabaseContext
         public DateTime? DeliveryDate { get; set; }
         public DateTime? ClosedDate { get; set; }
         public string Comments { get; set; }
-        public short Paid { get; set; }
+        public bool Paid { get; set; }
+        public bool IsSiteService { get; set; }
+        public bool IsDelivery { get; set; }
+        public bool IsCancelled { get; set; }
+        public long CustomerId { get; set; }
 
         public virtual ICollection<WorkOrderInventoryMap> WorkOrderInventoryMap { get; set; }
+
+        public virtual WorkOrderPayment WorkOrderPayment { get; set; }
     }
 }

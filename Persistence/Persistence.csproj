@@ -187,7 +187,9 @@
     <Compile Include="DbContext\Vendor.cs" />
     <Compile Include="DbContext\VendorAddressMap.cs" />
     <Compile Include="DbContext\WorkOrder.cs" />
+    <Compile Include="DbContext\WorkOrderImageMap.cs" />
     <Compile Include="DbContext\WorkOrderInventoryMap.cs" />
+    <Compile Include="DbContext\WorkOrderPayment.cs" />
     <Compile Include="EOPersistence.cs" />
     <Compile Include="IEOPersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

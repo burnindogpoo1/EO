@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using Android.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,9 @@ namespace EO.ViewModels.DataModels
     /// <summary>
     /// Login object
     /// </summary>
+    /// 
+    [Serializable]
+    [Preserve(AllMembers=true)]
     public class LoginDTO
     {
         public LoginDTO()
